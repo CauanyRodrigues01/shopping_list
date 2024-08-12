@@ -25,15 +25,11 @@
 - Análise de Requisitos:
 
   - **Entendimento do Escopo**: O aplicativo permitirá que o usuário crie uma conta, adicione itens à sua lista de desejos, e, ao navegar por lojas online, armazene links e preços desses itens na lista. O usuário poderá categorizar itens, removê-los, marcar como concluídos e compartilhar a lista com outros usuários.
-  - Funcionalidades Principais:
+  - **Funcionalidades Principais**:
     - **Gerenciamento de Usuários**: Implementação de funções de Login/Registro, e gerenciamento de perfil de usuário.
     - **Gerenciamento de Desejos**: Implementação de funcionalidades para adicionar, editar, excluir, e marcar desejos como concluídos.
     - **Compartilhamento de Lista**: Implementação de uma funcionalidade que permite aos usuários compartilhar suas listas de desejos com outras pessoas.
 
 - Diagrama UML de Classe:
-
-  - Será elaborado um diagrama UML para ilustrar as classes principais do sistema e suas relações, como as classes `Usuário`, `ListaDeDesejos`, e `Desejo`. Este diagrama servirá como base para o desenvolvimento do código.
-
-  - Exemplo de diagrama de classes:
-
+  
     ![](https://github.com/CauanyRodrigues01/Wish-list/blob/main/WishList.svg)
