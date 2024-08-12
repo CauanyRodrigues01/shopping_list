@@ -36,4 +36,4 @@
 
   - Exemplo de diagrama de classes:
 
-    <img src=".Wish-list\WishList.svg" alt="WishList" style="zoom:70%;" />
+    ![](https://github.com/CauanyRodrigues01/Wish-list/blob/main/WishList.svg)
