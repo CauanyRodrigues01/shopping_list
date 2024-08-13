@@ -18,5 +18,6 @@ public class Main {
 		System.out.println(cauany.getWishList());
 		System.out.println(duda);
 		System.out.println(duda.getWishList());
+		System.out.println("teste em outra maquina");
 	}
 }
