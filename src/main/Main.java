@@ -22,6 +22,7 @@ public class Main {
 		
 		
 		System.out.println("Teste PC de JV");
+		System.out.println("Teste2 PC de JV");
 	}
 	
 }
