@@ -1,4 +1,4 @@
-package main;
+package br.com.wishList.main;
 
 import java.util.Objects;
 

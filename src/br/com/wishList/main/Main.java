@@ -1,4 +1,4 @@
-package main;
+package br.com.wishList.main;
 
 public class Main {
 	public static void main(String args[]) {
@@ -20,3 +20,4 @@ public class Main {
 		System.out.println(duda.getWishList());
 	}
 }
+
