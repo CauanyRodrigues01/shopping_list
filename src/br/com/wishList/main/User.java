@@ -1,6 +1,8 @@
 package br.com.wishList.main;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 
 public class User {
@@ -48,27 +50,31 @@ public class User {
 	 * Adicionar novos wishs ao usuário
 	 */
 	public void addWish(Wish wish) {
-		if (verifyWish(wish)) {
+		if (wish.getUser().equals(this) && !wishList.contains(wish)) {
 			this.wishList.add(wish);
 		}
 		
 	}
 	
 	/**
-	 * Verifica se o Wish pode ser adicionado à lista de desejos.
-	 * 
-	 * @param wish O Wish a ser verificado.
-	 * @return true se o desejo puder ser adicionado, false caso contrário.
+	 * Remover wishs do usuário
 	 */
-	public boolean verifyWish(Wish wish) {
-	    // Verifica se o usuário do Wish é o mesmo usuário atual
-	    if (!wish.getUser().equals(this)) {
-	        return false;
+	public void removeWish(Wish wish) {
+	    if (wish.getUser().equals(this) && !wishList.isEmpty() && wishList.contains(wish)) {
+	    	this.wishList.remove(wish);
 	    }
-
-	    // Verifica se a lista de desejos está vazia ou se o desejo não está na lista
-	    return wishList.isEmpty() || !wishList.contains(wish);
 	}
+	
+	public List<Wish> getWishListView() {
+	    return Collections.unmodifiableList(wishList);
+	}
+
+	
+	//TODO Obter o número de itens na lista de desejos getWishCount()
+	//TODO Verificar se um WISH está na lista de desejos hasWish(Wish wish)
+	//TODO Limpar a lista de desejos clearWishList()
+	//TODO Obter uma cópia da lista de desejos getWishes() 
+	//TODO Obter uma lista de desejos em formato de leitura, sem expor a lista original getWishListView()  Collections.unmodifiableList(wishList)
 	
 	/**
 	 * @return the name
@@ -105,30 +111,6 @@ public class User {
 	 */
 	public void setEmail(String email) {
 		this.email = email;
-	}
-	/**
-	 * @return the password
-	 */
-	public String getPassword() {
-		return password;
-	}
-	/**
-	 * @param password the password to set
-	 */
-	public void setPassword(String password) {
-		this.password = password;
-	}
-	/**
-	 * @return the wishList
-	 */
-	public ArrayList<Wish> getWishList() {
-		return wishList;
-	}
-	/**
-	 * @param wishList the wishList to set
-	 */
-	public void setWishList(Wish wishList) {
-		this.wishList.add(wishList);
 	}
 
 	/**

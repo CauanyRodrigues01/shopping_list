@@ -15,14 +15,10 @@ public class Main {
 		cauany.addWish(bolsa);
 		
 		System.out.println(cauany);
-		System.out.println(cauany.getWishList());
+		System.out.println(cauany.getWishListView());
 		System.out.println(duda);
-		System.out.println(duda.getWishList());
-		System.out.println("teste em outra maquina");
+		System.out.println(duda.getWishListView());
 		
-		
-		System.out.println("Teste PC de JV");
-		System.out.println("Teste2 PC de JV");
 	}
 	
 }
