@@ -11,27 +11,10 @@ public class User {
 	private String nickName;
 	private String email;
 	private String password;
-	private ArrayList<Wish> wishList = new ArrayList<Wish>();
-	
+	private List<Wish> wishList = new ArrayList<>();
 	
 	
 	/**
-	 * @param name
-	 * @param nickName
-	 * @param email
-	 * @param password
-	 * @param wishList
-	 */
-	public User(String name, String nickName, String email, String password, ArrayList<Wish> wishList) {
-		this.name = name;
-		this.nickName = nickName;
-		this.email = email;
-		this.password = password;
-		this.wishList = wishList;
-	}
-	
-	/**
-	 * Construtor de usuário que ainda não tem wishList
 	 * @param name
 	 * @param nickName
 	 * @param email
@@ -49,6 +32,7 @@ public class User {
 	/**
 	 * Adicionar novos wishs ao usuário
 	 */
+	// TODO adicionaR mensagens de erro claras ou usando exceções, caso a verificação falhe.
 	public void addWish(Wish wish) {
 		if (wish.getUser().equals(this) && !wishList.contains(wish)) {
 			this.wishList.add(wish);
@@ -65,17 +49,33 @@ public class User {
 	    }
 	}
 	
+	/**
+	 * Obter uma lista de desejos em formato de leitura, sem expor a lista original
+	 */
 	public List<Wish> getWishListView() {
 	    return Collections.unmodifiableList(wishList);
 	}
 
+	/**
+	 * Obter o número de itens na lista de desejos
+	 */
+	public int getWishListSize() {
+		return this.wishList.size();
+	}
 	
-	//TODO Obter o número de itens na lista de desejos getWishCount()
-	//TODO Verificar se um WISH está na lista de desejos hasWish(Wish wish)
-	//TODO Limpar a lista de desejos clearWishList()
-	//TODO Obter uma cópia da lista de desejos getWishes() 
-	//TODO Obter uma lista de desejos em formato de leitura, sem expor a lista original getWishListView()  Collections.unmodifiableList(wishList)
+	/**
+	 * Limpar a lista de desejos
+	 */
+	public void clearWishList() {
+		this.wishList.clear();
+	}
 	
+	/**
+	 * Verificar se um WISH está na lista de desejos
+	 */
+	public boolean hasWish(Wish wish) {
+		return wishList.contains(wish);
+	}
 	/**
 	 * @return the name
 	 */
@@ -126,7 +126,7 @@ public class User {
 	 */
 	@Override
 	public int hashCode() {
-		return Objects.hash(email, name, nickName, password);
+		return Objects.hash(email, name, password);
 	}
 
 	/**
@@ -139,10 +139,6 @@ public class User {
 		if (!(obj instanceof User))
 			return false;
 		User other = (User) obj;
-		return Objects.equals(email, other.email) && Objects.equals(name, other.name)
-				&& Objects.equals(nickName, other.nickName) && Objects.equals(password, other.password);
+		return Objects.equals(email, other.email) && Objects.equals(nickName, other.nickName) && Objects.equals(password, other.password);
 	}
-	
-	
-
 }
