@@ -13,7 +13,6 @@ public class User {
 	private String password;
 	private List<Wish> wishList = new ArrayList<>();
 	
-	
 	/**
 	 * @param name
 	 * @param nickName
@@ -27,25 +26,30 @@ public class User {
 		this.email = email;
 		this.password = password;
 	}
-	
 
 	/**
 	 * Adicionar novos wishs ao usuário
 	 */
-	// TODO adicionaR mensagens de erro claras ou usando exceções, caso a verificação falhe.
-	public void addWish(Wish wish) {
-		if (wish.getUser().equals(this) && !wishList.contains(wish)) {
-			this.wishList.add(wish);
+	public void addWish(Wish wish) throws WishExtantException, WishInUseException  {
+		if (!wishList.contains(wish)) {
+			if (wish.getUser().equals(this)) {
+				this.wishList.add(wish);
+			} else {
+				throw new WishInUseException();
+			}
+		} else {
+			throw new WishExtantException();
 		}
-		
 	}
 	
 	/**
 	 * Remover wishs do usuário
 	 */
-	public void removeWish(Wish wish) {
-	    if (wish.getUser().equals(this) && !wishList.isEmpty() && wishList.contains(wish)) {
+	public void removeWish(Wish wish) throws WishInUseException {
+	    if (wish.getUser().equals(this)) {
 	    	this.wishList.remove(wish);
+	    } else {
+	    	throw new WishInUseException();
 	    }
 	}
 	

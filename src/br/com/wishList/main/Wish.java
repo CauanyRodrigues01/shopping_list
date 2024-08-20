@@ -55,7 +55,13 @@ public class Wish {
 		this.price = price;
 		this.image = image;
 		this.user = user;
-		this.user.addWish(this);
+		try {
+			this.user.addWish(this);
+		} catch (WishExtantException e) {
+			e.printStackTrace();
+		} catch (WishInUseException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	/**
