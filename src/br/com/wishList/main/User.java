@@ -1,5 +1,6 @@
 package br.com.wishList.main;
 
+import java.security.MessageDigest;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -12,7 +13,16 @@ public class User {
 	private String email;
 	private String password;
 	private List<Wish> wishList = new ArrayList<>();
-	
+
+//	MessageDigest algorithm = MessageDigest.getInstance("SHA-256"); 
+//	byte messageDigest\[\] = algorithm.digest(original.getBytes("UTF-8"));
+//
+//	StringBuilder hexString = new StringBuilder(); 
+//	for (byte b : messageDigest) { 
+//		hexString.append(String.format("%02X", 0xFF & b)); 
+//		} String senha = hexString.toString(); 
+//	
+		
 	/**
 	 * @param name
 	 * @param nickName

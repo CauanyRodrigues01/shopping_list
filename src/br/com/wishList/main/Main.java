@@ -1,9 +1,12 @@
 package br.com.wishList.main;
 
-import java.util.Scanner;
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 public class Main {
-	public static void main(String args[]) throws WishExtantException {
+	public static void main(String args[]) throws WishExtantException, NoSuchAlgorithmException,
+    UnsupportedEncodingException  {
 		
 		User cauany = new User("cauany rodrigues", "cacau21", "cauany@gmail.com", "1234");
 		User duda = new User("duda", "dudinha", "dudy@gmail.com", "1234");
@@ -50,6 +53,20 @@ public class Main {
 		System.out.println(bruna.getWishListSize());
 		cauany.clearWishList();
 		System.out.println("Cauany tem: " + cauany.getWishListSize());
+		
+
+	       String senha = "admin";
+
+	       MessageDigest algorithm = MessageDigest.getInstance("SHA-256");
+	       byte messageDigest[] = algorithm.digest(senha.getBytes("UTF-8"));
+
+	       StringBuilder hexString = new StringBuilder();
+	       for (byte b : messageDigest) {
+	         hexString.append(String.format("%02X", 0xFF & b));
+	       }
+	       String senhahex = hexString.toString();
+
+	       System.out.println(senhahex);
 	
 		
 	} // fim do método main
