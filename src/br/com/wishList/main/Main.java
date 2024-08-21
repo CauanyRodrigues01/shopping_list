@@ -24,7 +24,7 @@ public class Main {
 			e.printStackTrace();
 		}
 		
-		// tigela pertence a duda, não pode ser adicionada a cauany
+		// tigela pertence a duda, não pode ser adicionada a cauany teste
 		try {
 			cauany.addWish(tigela);
 		} catch (WishInUseException e) {
