@@ -7,6 +7,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import javax.crypto.SecretKeyFactory;
+import javax.crypto.spec.PBEKeySpec;
+import java.security.SecureRandom;
+import java.security.spec.InvalidKeySpecException;
+import java.util.Base64;
+
+
 
 public class User {
 	
@@ -23,7 +30,7 @@ public class User {
 	 * @param password
 	 * @param wishList
 	 */
-	public User(String name, String nickName, String email, String password) {
+	public User(String name, String nickName, String email, String password) throws NoSuchAlgorithmException, InvalidKeySpecException {
 		this.name = name;
 		this.nickName = nickName;
 		this.email = email;
@@ -42,6 +49,13 @@ public class User {
 		} catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
+		
+		 {
+		    String  originalPassword = "password";
+
+		    String generatedSecuredPasswordHash 
+		        = generateStorngPasswordHash(originalPassword);
+		    System.out.println(generatedSecuredPasswordHash);
         
 	}
 
