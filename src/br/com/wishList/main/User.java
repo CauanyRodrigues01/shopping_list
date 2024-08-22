@@ -1,6 +1,8 @@
 package br.com.wishList.main;
 
+import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -11,18 +13,9 @@ public class User {
 	private String name;
 	private String nickName;
 	private String email;
-	private String password;
+	private String hexaPassword;
 	private List<Wish> wishList = new ArrayList<>();
 
-//	MessageDigest algorithm = MessageDigest.getInstance("SHA-256"); 
-//	byte messageDigest\[\] = algorithm.digest(original.getBytes("UTF-8"));
-//
-//	StringBuilder hexString = new StringBuilder(); 
-//	for (byte b : messageDigest) { 
-//		hexString.append(String.format("%02X", 0xFF & b)); 
-//		} String senha = hexString.toString(); 
-//	
-		
 	/**
 	 * @param name
 	 * @param nickName
@@ -34,7 +27,22 @@ public class User {
 		this.name = name;
 		this.nickName = nickName;
 		this.email = email;
-		this.password = password;
+		
+
+        MessageDigest algorithm;
+		try {
+			algorithm = MessageDigest.getInstance("SHA-256");
+			byte messageDigest[] = algorithm.digest(password.getBytes("UTF-8"));
+			StringBuilder hexString = new StringBuilder();
+			for (byte b : messageDigest) {
+				hexString.append(String.format("%02X", 0xFF & b));
+			}
+			String passwordHex = hexString.toString();
+			this.hexaPassword = passwordHex;
+		} catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+        
 	}
 
 	/**
@@ -132,7 +140,7 @@ public class User {
 	 */
 	@Override
 	public String toString() {
-		return "User [name=" + name + ", nickName=" + nickName + ", email=" + email + "]";
+		return "User [name=" + name + ", nickName=" + nickName + ", email=" + email + "senha=" + hexaPassword + "]";
 	}
 
 	/**
@@ -140,7 +148,7 @@ public class User {
 	 */
 	@Override
 	public int hashCode() {
-		return Objects.hash(email, name, password);
+		return Objects.hash(email, name, hexaPassword);
 	}
 
 	/**
@@ -153,6 +161,6 @@ public class User {
 		if (!(obj instanceof User))
 			return false;
 		User other = (User) obj;
-		return Objects.equals(email, other.email) && Objects.equals(nickName, other.nickName) && Objects.equals(password, other.password);
+		return Objects.equals(email, other.email) && Objects.equals(nickName, other.nickName) && Objects.equals(hexaPassword, other.hexaPassword);
 	}
 }

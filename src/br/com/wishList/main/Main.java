@@ -24,7 +24,7 @@ public class Main {
 			e.printStackTrace();
 		}
 		
-		// tigela pertence a duda, não pode ser adicionada a cauany teste
+		// tigela pertence a duda, não pode ser adicionada a cauany
 		try {
 			cauany.addWish(tigela);
 		} catch (WishInUseException e) {
@@ -53,21 +53,10 @@ public class Main {
 		System.out.println(bruna.getWishListSize());
 		cauany.clearWishList();
 		System.out.println("Cauany tem: " + cauany.getWishListSize());
-		
+		System.out.println(cauany.toString());
+		System.out.println(duda.toString());
+		System.out.println(bruna.toString());
 
-	       String senha = "admin";
-
-	       MessageDigest algorithm = MessageDigest.getInstance("SHA-256");
-	       byte messageDigest[] = algorithm.digest(senha.getBytes("UTF-8"));
-
-	       StringBuilder hexString = new StringBuilder();
-	       for (byte b : messageDigest) {
-	         hexString.append(String.format("%02X", 0xFF & b));
-	       }
-	       String senhahex = hexString.toString();
-
-	       System.out.println(senhahex);
-	
 		
 	} // fim do método main
 } // fim da classe main
