@@ -1,26 +1,18 @@
 package br.com.wishList.main;
 
-import java.io.UnsupportedEncodingException;
-import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
-import javax.crypto.SecretKeyFactory;
-import javax.crypto.spec.PBEKeySpec;
-import java.security.SecureRandom;
-import java.security.spec.InvalidKeySpecException;
-import java.util.Base64;
-
-
 
 public class User {
 	
 	private String name;
 	private String nickName;
 	private String email;
-	private String hexaPassword;
+	private PasswordUtils password;
 	private List<Wish> wishList = new ArrayList<>();
 
 	/**
@@ -30,33 +22,15 @@ public class User {
 	 * @param password
 	 * @param wishList
 	 */
-	public User(String name, String nickName, String email, String password) throws NoSuchAlgorithmException, InvalidKeySpecException {
+	public User(String name, String nickName, String email, String inputPassword) {
 		this.name = name;
 		this.nickName = nickName;
 		this.email = email;
-		
-
-        MessageDigest algorithm;
-		try {
-			algorithm = MessageDigest.getInstance("SHA-256");
-			byte messageDigest[] = algorithm.digest(password.getBytes("UTF-8"));
-			StringBuilder hexString = new StringBuilder();
-			for (byte b : messageDigest) {
-				hexString.append(String.format("%02X", 0xFF & b));
-			}
-			String passwordHex = hexString.toString();
-			this.hexaPassword = passwordHex;
-		} catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}
-		
-		 {
-		    String  originalPassword = "password";
-
-		    String generatedSecuredPasswordHash 
-		        = generateStorngPasswordHash(originalPassword);
-		    System.out.println(generatedSecuredPasswordHash);
-        
+		this.password = new PasswordUtils(inputPassword);
+		//TODO Lançar uma exceção personalizada (como UserCreationException)
+		//TODO Validar a complexidade da senha no momento da criação do usuário (como exigência de mínimo de caracteres, mistura de letras maiúsculas, minúsculas, números, etc.)
+		//TODO Adicionar logging adequado ao invés de apenas imprimir erros na saída padrão, utilizando bibliotecas como java.util.logging ou Log4j para ajudar na monitoração e diagnóstico do sistema.
+		//TODO Criar testes unitários para a classe User
 	}
 
 	/**
@@ -67,47 +41,75 @@ public class User {
 			if (wish.getUser().equals(this)) {
 				this.wishList.add(wish);
 			} else {
-				throw new WishInUseException();
+				throw new WishInUseException("O desejo já está sendo usado por outro usuário.");
 			}
 		} else {
-			throw new WishExtantException();
+			throw new WishExtantException("O desejo já existe.");
 		}
 	}
 	
 	/**
 	 * Remover wishs do usuário
+	 * 
+	 * @param wish O desejo que se deseja remover.
+	 * @throws WishInUseException Se o desejo não pertencer ao usário, ele não pode ser removido.
 	 */
 	public void removeWish(Wish wish) throws WishInUseException {
 	    if (wish.getUser().equals(this)) {
 	    	this.wishList.remove(wish);
 	    } else {
-	    	throw new WishInUseException();
+	    	throw new WishInUseException("O desejo já está sendo usado por outro usuário.");
 	    }
 	}
-	
 	/**
-	 * Obter uma lista de desejos em formato de leitura, sem expor a lista original
+	 * Verifica se a senha fornecida corresponde ao hash da senha do usuário.
+	 * 
+	 * @param inputPassword A senha fornecida em texto claro.
+	 * @return true se a senha gerar a mesma hash, false caso contráro.
+	 */
+	public boolean verifyPassword(String inputPassword) {
+	    try {
+	        return password.validatePassword(inputPassword);
+	    } catch (NoSuchAlgorithmException e) {
+			System.out.println("O algoritmo especificado não está disponível: " + e.getMessage());
+			e.printStackTrace();
+			return false;
+		} catch (InvalidKeySpecException e) {
+			System.out.println("Especificação da chave inválida: " + e.getMessage());
+			e.printStackTrace();
+			return false;
+		}
+	}
+	/**
+	 * Obter uma lista de desejos em formato de leitura, sem expor a lista original.
+	 * 
+	 * @return Uma Lista que armazena uma cópia da lista de desejos do usuário.
 	 */
 	public List<Wish> getWishListView() {
 	    return Collections.unmodifiableList(wishList);
 	}
 
 	/**
-	 * Obter o número de itens na lista de desejos
+	 * Obter o número de desejos do usuário.
+	 * 
+	 * @return Um inteiro da quantidade de desejos que usuário tem.
 	 */
-	public int getWishListSize() {
+	public int getWishSize() {
 		return this.wishList.size();
 	}
 	
 	/**
-	 * Limpar a lista de desejos
+	 * Limpar os desejos do usuário
 	 */
-	public void clearWishList() {
+	public void clearUserWish() {
 		this.wishList.clear();
 	}
 	
 	/**
-	 * Verificar se um WISH está na lista de desejos
+	 * Verificar se um desejo pertence ao usuário.
+	 * 
+	 * @param wish O desejo que se deseja encontrar
+	 * @return true se o desejo for encontrado, false caso contrário.
 	 */
 	public boolean hasWish(Wish wish) {
 		return wishList.contains(wish);
@@ -154,7 +156,7 @@ public class User {
 	 */
 	@Override
 	public String toString() {
-		return "User [name=" + name + ", nickName=" + nickName + ", email=" + email + "senha=" + hexaPassword + "]";
+		return "User [name=" + name + ", nickName=" + nickName + ", email=" + email + "]";
 	}
 
 	/**
@@ -162,7 +164,7 @@ public class User {
 	 */
 	@Override
 	public int hashCode() {
-		return Objects.hash(email, name, hexaPassword);
+		return Objects.hash(email, name, password);
 	}
 
 	/**
@@ -175,6 +177,6 @@ public class User {
 		if (!(obj instanceof User))
 			return false;
 		User other = (User) obj;
-		return Objects.equals(email, other.email) && Objects.equals(nickName, other.nickName) && Objects.equals(hexaPassword, other.hexaPassword);
+		return Objects.equals(email, other.email) && Objects.equals(nickName, other.nickName) && Objects.equals(password, other.password);
 	}
 }

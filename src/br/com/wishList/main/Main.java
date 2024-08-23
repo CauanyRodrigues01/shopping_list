@@ -49,13 +49,15 @@ public class Main {
 		System.out.println("Lista de desejos de cauay: " + cauany.getWishListView());
 		System.out.println(duda);
 		System.out.println(duda.getWishListView());
-		System.out.println(cauany.getWishListSize());
-		System.out.println(bruna.getWishListSize());
-		cauany.clearWishList();
-		System.out.println("Cauany tem: " + cauany.getWishListSize());
+		System.out.println(cauany.getWishSize());
+		System.out.println(bruna.getWishSize());
+		cauany.clearUserWish();
+		System.out.println("Cauany tem: " + cauany.getWishSize());
 		System.out.println(cauany.toString());
 		System.out.println(duda.toString());
 		System.out.println(bruna.toString());
+		
+		System.out.println(cauany.verifyPassword("1234"));
 
 		
 	} // fim do método main
