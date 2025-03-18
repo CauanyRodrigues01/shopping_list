@@ -1,5 +1,3 @@
-package br.com.wishList.main;
-
 public class WishInUseException extends Exception {
 	public WishInUseException() {
 		super();

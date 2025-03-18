@@ -1,7 +1,4 @@
-package br.com.wishList.main;
-
 import java.io.UnsupportedEncodingException;
-import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 public class Main {
@@ -58,7 +55,7 @@ public class Main {
 		System.out.println(bruna.toString());
 		
 		System.out.println(cauany.verifyPassword("1234"));
-
+		
 		
 	} // fim do método main
 } // fim da classe main
