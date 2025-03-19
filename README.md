@@ -54,9 +54,4 @@ O aplicativo permite que o usuário crie uma conta, adicione itens à sua lista 
 
 ### 5. Diagrama UML de Classe
 
-A ser desenvolvido na próxima fase do projeto, contemplando as entidades principais:
-
-- **Usuário**: Gerencia autenticação e perfil.
-- **ListaDeDesejos**: Representa cada lista criada por um usuário.
-- **Item**: Cada item dentro de uma lista de desejos, com atributos como nome, categoria, link, preço e status (pendente ou concluído).
-
+<img src="C:\Users\cauan\OneDrive\Documentos\Git\Wish-list\WishList.svg" alt="WishList" style="zoom:70%;" />
