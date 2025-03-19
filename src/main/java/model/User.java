@@ -7,48 +7,43 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 import exceptions.WishExtantException;
 import exceptions.WishInUseException;
+import lombok.*;
 import utils.PasswordUtils;
 
+//TODO Lançar uma exceção personalizada (como UserCreationException)
+//TODO Validar a complexidade da senha no momento da criação do usuário (como exigência de mínimo de caracteres, mistura de letras maiúsculas, minúsculas, números, etc.)
+//TODO Adicionar logging adequado ao invés de apenas imprimir erros na saída padrão, utilizando bibliotecas como java.util.logging ou Log4j para ajudar na monitoração e diagnóstico do sistema.
+//TODO Criar testes unitários para a classe User
+
+
+@ToString(exclude = "password")
+@EqualsAndHashCode
 public class User {
 	
+	private static int cont = 1;
+	@Getter @Setter
+	private int id;
+	@Getter @Setter
 	private String name;
+	@Getter @Setter
 	private String nickName;
+	@Getter @Setter
 	private String email;
 	private PasswordUtils password;
-	private List<Wish> wishList = new ArrayList<>();
+	@Getter @Setter
+	private List<WishList> wishLists;
 
 	public User(String name, String nickName, String email, String inputPassword) {
+		this.id = cont++;
 		this.name = name;
 		this.nickName = nickName;
 		this.email = email;
 		this.password = new PasswordUtils(inputPassword);
-		//TODO Lançar uma exceção personalizada (como UserCreationException)
-		//TODO Validar a complexidade da senha no momento da criação do usuário (como exigência de mínimo de caracteres, mistura de letras maiúsculas, minúsculas, números, etc.)
-		//TODO Adicionar logging adequado ao invés de apenas imprimir erros na saída padrão, utilizando bibliotecas como java.util.logging ou Log4j para ajudar na monitoração e diagnóstico do sistema.
-		//TODO Criar testes unitários para a classe User
-	}
-
-	public void addWish(Wish wish) throws WishExtantException, WishInUseException  {
-		if (!wishList.contains(wish)) {
-			if (wish.getUser().equals(this)) {
-				this.wishList.add(wish);
-			} else {
-				throw new WishInUseException("O desejo já está sendo usado por outro usuário.");
-			}
-		} else {
-			throw new WishExtantException("O desejo já existe.");
-		}
-	}
-	
-	public void removeWish(Wish wish) throws WishInUseException {
-	    if (wish.getUser().equals(this)) {
-	    	this.wishList.remove(wish);
-	    } else {
-	    	throw new WishInUseException("O desejo já está sendo usado por outro usuário.");
-	    }
+		this.wishLists = new ArrayList<>();
 	}
 
 	public boolean verifyPassword(String inputPassword) {
@@ -64,64 +59,34 @@ public class User {
 			return false;
 		}
 	}
-
-	public List<Wish> getWishListView() {
-	    return Collections.unmodifiableList(wishList);
+	
+	// Adiciona uma lista de desejos
+	public void addWishList(WishList wishList) {
+		this.wishLists.add(wishList);
+	}
+	
+	// Remove uma lista de desejos
+	public void removedWishList(WishList wishList) {
+		this.wishLists.remove(wishList);
+	}
+	
+	// Retorna para visualização as listas de desejos não modificável
+	public List<WishList> getUserWishListsView() {
+	    return Collections.unmodifiableList(wishLists);
 	}
 
+	// Retorna os quantidades de listas que o usuário possui
 	public int getWishSize() {
-		return this.wishList.size();
+		return this.wishLists.size();
 	}
 
-	public void clearUserWish() {
-		this.wishList.clear();
+	// Esvazia as listas do usuário
+	public void clearUserWishLists() {
+		this.wishLists.clear();
 	}
 
-	public boolean hasWish(Wish wish) {
-		return wishList.contains(wish);
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getNickName() {
-		return nickName;
-	}
-
-	public void setNickName(String nickName) {
-		this.nickName = nickName;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	@Override
-	public String toString() {
-		return "User [name=" + name + ", nickName=" + nickName + ", email=" + email + "]";
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(email, name, password);
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (!(obj instanceof User))
-			return false;
-		User other = (User) obj;
-		return Objects.equals(email, other.email) && Objects.equals(nickName, other.nickName) && Objects.equals(password, other.password);
+	// Verifica se tem alguma listas de desejo
+	public boolean hasWishList(WishList wishList) {
+		return wishLists.contains(wishList);
 	}
 }
