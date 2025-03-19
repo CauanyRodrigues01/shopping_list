@@ -54,4 +54,5 @@ O aplicativo permite que o usuário crie uma conta, adicione itens à sua lista 
 
 ### 5. Diagrama UML de Classe
 
-![](https://github.com/CauanyRodrigues01/Wish-list/blob/main/WishList.svg)
+![](https://github.com/CauanyRodrigues01/Wish-list/blob/main/WishList.png)
+
