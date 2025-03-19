@@ -15,7 +15,7 @@ public class PasswordUtils {
 		try {
 			String originalPassword = inputPassword;
 			String generatedSecuredPasswordHash = generateStorngPasswordHash(originalPassword);
-			passwordTreated = generatedSecuredPasswordHash;
+			this.passwordTreated = generatedSecuredPasswordHash;
 		} catch (NoSuchAlgorithmException e) {
 			System.out.println("O algoritmo especificado não está disponível: " + e.getMessage());
 			e.printStackTrace();
