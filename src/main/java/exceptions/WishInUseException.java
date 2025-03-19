@@ -1,3 +1,5 @@
+package exceptions;
+
 public class WishInUseException extends Exception {
 	public WishInUseException() {
 		super();

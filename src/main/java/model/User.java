@@ -1,9 +1,16 @@
+package model;
+
+
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+
+import exceptions.WishExtantException;
+import exceptions.WishInUseException;
+import utils.PasswordUtils;
 
 public class User {
 	

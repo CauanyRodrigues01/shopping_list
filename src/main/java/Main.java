@@ -1,6 +1,11 @@
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 
+import exceptions.WishExtantException;
+import exceptions.WishInUseException;
+import model.User;
+import model.Wish;
+
 public class Main {
 	public static void main(String args[]) throws WishExtantException, NoSuchAlgorithmException,
     UnsupportedEncodingException  {

@@ -1,4 +1,9 @@
+package model;
+
 import java.util.Objects;
+
+import exceptions.WishExtantException;
+import exceptions.WishInUseException;
 
 public class Wish {
 	

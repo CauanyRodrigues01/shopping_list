@@ -1,3 +1,4 @@
+package utils;
 import java.math.BigInteger;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
@@ -56,7 +57,7 @@ public class PasswordUtils {
 		}
 	}
 
-	protected boolean validatePassword(String inputPassword) throws NoSuchAlgorithmException, InvalidKeySpecException {
+	public boolean validatePassword(String inputPassword) throws NoSuchAlgorithmException, InvalidKeySpecException {
 		String[] parts = this.passwordTreated.split(":");
 		int iterations = Integer.parseInt(parts[0]);
 		

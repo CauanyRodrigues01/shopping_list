@@ -1,3 +1,5 @@
+package exceptions;
+
 public class WishExtantException extends Exception {
 	public WishExtantException() {
 		super();
