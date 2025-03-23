@@ -1,4 +1,5 @@
 package utils;
+
 import java.math.BigInteger;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
@@ -81,6 +82,10 @@ public class PasswordUtils {
 			bytes[i] = (byte)Integer.parseInt(hex.substring(2 * i, 2 * i + 2), 16);
 		}
 		return bytes;
+	}
+	
+	public String getHash() {
+		return this.passwordTreated;
 	}
 	
 }
