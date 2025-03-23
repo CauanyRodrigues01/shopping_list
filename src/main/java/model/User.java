@@ -1,16 +1,9 @@
 package model;
 
 
-import java.security.NoSuchAlgorithmException;
-import java.security.spec.InvalidKeySpecException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
-import java.util.Set;
-
-import exceptions.WishExtantException;
-import exceptions.WishInUseException;
 import lombok.*;
 import utils.PasswordUtils;
 
@@ -24,41 +17,40 @@ import utils.PasswordUtils;
 @EqualsAndHashCode
 public class User {
 	
-	private static int cont = 1;
 	@Getter @Setter
-	private int id;
+	private Integer id;
 	@Getter @Setter
 	private String name;
 	@Getter @Setter
 	private String nickName;
 	@Getter @Setter
 	private String email;
-	private PasswordUtils password;
+	private String password;
 	@Getter @Setter
 	private List<WishList> wishLists;
 
-	public User(String name, String nickName, String email, String inputPassword) {
-		this.id = cont++;
+	public User(Integer id, String name, String nickName, String email, String inputPassword) {
+		this.id = id;
 		this.name = name;
 		this.nickName = nickName;
 		this.email = email;
-		this.password = new PasswordUtils(inputPassword);
+		this.password = new PasswordUtils(inputPassword).getHash();
 		this.wishLists = new ArrayList<>();
 	}
 
-	public boolean verifyPassword(String inputPassword) {
-	    try {
-	        return password.validatePassword(inputPassword);
-	    } catch (NoSuchAlgorithmException e) {
-			System.out.println("O algoritmo especificado não está disponível: " + e.getMessage());
-			e.printStackTrace();
-			return false;
-		} catch (InvalidKeySpecException e) {
-			System.out.println("Especificação da chave inválida: " + e.getMessage());
-			e.printStackTrace();
-			return false;
-		}
-	}
+//	public boolean verifyPassword(String inputPassword) {
+//	    try {
+//	        return password.validatePassword(inputPassword);
+//	    } catch (NoSuchAlgorithmException e) {
+//			System.out.println("O algoritmo especificado não está disponível: " + e.getMessage());
+//			e.printStackTrace();
+//			return false;
+//		} catch (InvalidKeySpecException e) {
+//			System.out.println("Especificação da chave inválida: " + e.getMessage());
+//			e.printStackTrace();
+//			return false;
+//		}
+//	}
 	
 	// Adiciona uma lista de desejos
 	public void addWishList(WishList wishList) {

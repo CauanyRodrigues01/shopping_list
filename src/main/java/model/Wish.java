@@ -6,10 +6,10 @@ import lombok.*;
 @Setter
 @ToString
 @EqualsAndHashCode
+@NoArgsConstructor
 public class Wish {
 	
-	private static int cont = 1;
-	private int id;
+	private Integer id;
 	private String name;
 	private String description;
 	private String category;
@@ -18,18 +18,6 @@ public class Wish {
 	private String image;
 	private Boolean isCompleted;
 	private WishList wishList;
-
-	public Wish(String name, String description, String category, String link, Double price, String image, WishList wishList) {
-		this.id = cont++;
-		this.name = name;
-		this.description = description;
-		this.category = category;
-		this.link = link;
-		this.price = price;
-		this.image = image;
-		this.isCompleted = false;
-		this.wishList = wishList;
-	}
 	
 	// Mudar o status do desejo como concluído
 	public void markAsCompleted() {
