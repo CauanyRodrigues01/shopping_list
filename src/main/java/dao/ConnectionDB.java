@@ -6,22 +6,35 @@ import java.sql.SQLException;
 
 public class ConnectionDB {
 	
-	public Connection getConnection() {
-		
-		Connection conn = null;
+	private Connection connection;
+	
+	public ConnectionDB () {
 		String url = "jdbc:mysql://localhost/WishList";
 		String user = "root";
 		String password = "cacau21";
 		
 		try {
-			conn = DriverManager.getConnection(url, user, password);
+			this.connection = DriverManager.getConnection(url, user, password);
 			System.out.println("Conexão com banco de dados realizado com sucesso.");
 		} catch (SQLException e) {
 			System.out.println("Erro ao conectar o banco de dados: " + e.getMessage());
 		}
-		
-		return conn;
+	}
 	
+	public Connection getConnection() {
+		return this.connection;
+	}
+	
+	public void closeConnection() {
+		if (this.connection != null) {
+			try {
+				this.connection.close();
+				System.out.println("Conexão encerrada com sucesso.");
+			} catch (SQLException e) {
+				System.out.println("Erro ao encerrar a conexão com o Banco de Dados: " + e.getMessage());
+			}
+		}
+
 	}
 
 }
