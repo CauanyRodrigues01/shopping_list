@@ -12,13 +12,13 @@ public class TestConnection {
 		
 		try {
 			
-			ResultSet rsUsers = conn.getConnection().createStatement().executeQuery("SELECT * from user");
+			ResultSet rsUsers = conn.getConnectionDB().createStatement().executeQuery("SELECT * from user");
 			System.out.println("---USUÁRIOS---");
 			while (rsUsers.next()) {
 				System.out.println("Nome: " + rsUsers.getString("nome"));
 			}
 			
-			ResultSet rsWishes = conn.getConnection().createStatement().executeQuery("SELECT * from wish");
+			ResultSet rsWishes = conn.getConnectionDB().createStatement().executeQuery("SELECT * from wish");
 			System.out.println("---DESEJOS---");
 			while (rsWishes.next()) {
 				System.out.println("Nome: " + rsWishes.getString("nome"));

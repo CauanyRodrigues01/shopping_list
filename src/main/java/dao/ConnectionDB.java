@@ -21,7 +21,7 @@ public class ConnectionDB {
 		}
 	}
 	
-	public Connection getConnection() {
+	public Connection getConnectionDB() {
 		return this.connection;
 	}
 	
@@ -29,7 +29,7 @@ public class ConnectionDB {
 		if (this.connection != null) {
 			try {
 				this.connection.close();
-				System.out.println("Conexão encerrada com sucesso.");
+				System.out.println();
 			} catch (SQLException e) {
 				System.out.println("Erro ao encerrar a conexão com o Banco de Dados: " + e.getMessage());
 			}
