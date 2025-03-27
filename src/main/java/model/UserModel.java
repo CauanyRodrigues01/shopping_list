@@ -15,7 +15,7 @@ import utils.PasswordUtils;
 
 @ToString(exclude = "password")
 @EqualsAndHashCode
-public class User {
+public class UserModel {
 	
 	@Getter @Setter
 	private Integer id;
@@ -27,9 +27,9 @@ public class User {
 	private String email;
 	private String password;
 	@Getter @Setter
-	private List<WishList> wishLists;
+	private List<WishListModel> wishLists;
 
-	public User(Integer id, String name, String nickName, String email, String inputPassword) {
+	public UserModel(Integer id, String name, String nickName, String email, String inputPassword) {
 		this.id = id;
 		this.name = name;
 		this.nickName = nickName;
@@ -53,17 +53,17 @@ public class User {
 //	}
 	
 	// Adiciona uma lista de desejos
-	public void addWishList(WishList wishList) {
+	public void addWishList(WishListModel wishList) {
 		this.wishLists.add(wishList);
 	}
 	
 	// Remove uma lista de desejos
-	public void removedWishList(WishList wishList) {
+	public void removedWishList(WishListModel wishList) {
 		this.wishLists.remove(wishList);
 	}
 	
 	// Retorna para visualização as listas de desejos não modificável
-	public List<WishList> getUserWishListsView() {
+	public List<WishListModel> getUserWishListsView() {
 	    return Collections.unmodifiableList(wishLists);
 	}
 
@@ -78,7 +78,7 @@ public class User {
 	}
 
 	// Verifica se tem alguma listas de desejo
-	public boolean hasWishList(WishList wishList) {
+	public boolean hasWishList(WishListModel wishList) {
 		return wishLists.contains(wishList);
 	}
 }

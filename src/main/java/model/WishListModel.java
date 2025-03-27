@@ -12,15 +12,15 @@ import lombok.*;
 @ToString
 @EqualsAndHashCode
 @NoArgsConstructor
-public class WishList {
+public class WishListModel {
 	
 	private Integer id;
 	private String nome;
 	private Boolean isCompleted;
-	private User user;
-	private Set<Wish> wishes = new HashSet<>();
+	private UserModel user;
+	private Set<WishModel> wishes = new HashSet<>();
 	
-	public void addWish(Wish wish) throws WishExtantException, WishInUseException  {
+	public void addWish(WishModel wish) throws WishExtantException, WishInUseException  {
 		if (!wishes.contains(wish)) {
 			this.wishes.add(wish);
 		} else {
@@ -28,7 +28,7 @@ public class WishList {
 		}
 	}
 	
-	public void removeWish(Wish wish) throws WishNotFoundException {
+	public void removeWish(WishModel wish) throws WishNotFoundException {
 		if (wishes.contains(wish)) {
 			this.wishes.remove(wish);
 		} else {
@@ -48,7 +48,7 @@ public class WishList {
 
 	
 	// Verifica se tem algum desejo
-	public boolean hasWish(Wish wish) {
+	public boolean hasWish(WishModel wish) {
 		return wishes.contains(wish);
 	}
 	
