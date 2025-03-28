@@ -29,14 +29,23 @@ public class UserModel {
 	@Getter @Setter
 	private List<WishListModel> wishLists;
 
-	public UserModel(Integer id, String name, String nickName, String email, String inputPassword) {
+	public UserModel(Integer id, String name, String nickName, String email, String password) {
 		this.id = id;
 		this.name = name;
 		this.nickName = nickName;
 		this.email = email;
-		this.password = new PasswordUtils(inputPassword).getHash();
+		this.password = password;
 		this.wishLists = new ArrayList<>();
 	}
+	
+	public UserModel(String name, String nickName, String email, String password) {
+		this.name = name;
+		this.nickName = nickName;
+		this.email = email;
+		this.password = password;
+		this.wishLists = new ArrayList<>();
+	}
+
 
 //	public boolean verifyPassword(String inputPassword) {
 //	    try {
