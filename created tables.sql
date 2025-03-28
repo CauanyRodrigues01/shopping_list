@@ -1,0 +1,34 @@
+USE WishList;
+
+CREATE TABLE User (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(255) NOT NULL,
+    nick_name VARCHAR(50) UNIQUE NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    password_hash VARCHAR(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE WishList (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(255) NOT NULL,
+    is_completed BOOLEAN DEFAULT FALSE,
+    user_id INT NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES User(id) 
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE Wish (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(255) NOT NULL,
+    description TEXT,
+    category VARCHAR(100),
+    link VARCHAR(500),
+    price DECIMAL(10,2),
+    image VARCHAR(500),
+    is_completed BOOLEAN DEFAULT FALSE,
+    wish_list_id INT,
+    FOREIGN KEY (wish_list_id) REFERENCES WishList(id)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
