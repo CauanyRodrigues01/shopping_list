@@ -4,11 +4,11 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class ConnectionDB {
+public class ConnectionDBFactory {
 	
 	private Connection connection;
 	
-	public ConnectionDB () {
+	public ConnectionDBFactory() {
 		String url = "jdbc:mysql://localhost/WishList";
 		String user = "root";
 		String password = "cacau21";
@@ -17,7 +17,7 @@ public class ConnectionDB {
 			this.connection = DriverManager.getConnection(url, user, password);
 			System.out.println("Conexão com banco de dados realizado com sucesso.");
 		} catch (SQLException e) {
-			System.out.println("Erro ao conectar o banco de dados: " + e.getMessage());
+			System.out.println("Erro ao conectar-se o banco de dados: " + e.getMessage());
 		}
 	}
 	
