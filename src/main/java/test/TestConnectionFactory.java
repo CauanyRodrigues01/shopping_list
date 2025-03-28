@@ -2,31 +2,49 @@ package test;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import dao.ConnectionDB;
 
-public class TestConnection {
+import dao.ConnectionDBFactory;
+
+public class TestConnectionFactory {
 	
 	public static void main(String[] args) {
 		
-		ConnectionDB conn = new ConnectionDB();
+		ConnectionDBFactory connecctionFactory1 = new ConnectionDBFactory();
+		ConnectionDBFactory connecctionFactory2 = new ConnectionDBFactory();
+
 		
 		try {
 			
-			ResultSet rsUsers = conn.getConnectionDB().createStatement().executeQuery("SELECT * from user");
+			ResultSet rsUsers1 = connecctionFactory1.getConnectionDB().createStatement().executeQuery("SELECT * from user");
 			System.out.println("---USUÁRIOS---");
-			while (rsUsers.next()) {
-				System.out.println("Nome: " + rsUsers.getString("nome"));
+			while (rsUsers1.next()) {
+				System.out.println("Nome: " + rsUsers1.getString("nome"));
 			}
 			
-			ResultSet rsWishes = conn.getConnectionDB().createStatement().executeQuery("SELECT * from wish");
+			ResultSet rsWishes1 = connecctionFactory1.getConnectionDB().createStatement().executeQuery("SELECT * from wish");
 			System.out.println("---DESEJOS---");
-			while (rsWishes.next()) {
-				System.out.println("Nome: " + rsWishes.getString("nome"));
+			while (rsWishes1.next()) {
+				System.out.println("Nome: " + rsWishes1.getString("nome"));
 			}	
+			
+			
+			ResultSet rsUsers2 = connecctionFactory2.getConnectionDB().createStatement().executeQuery("SELECT * from user");
+			System.out.println("---USUÁRIOS---");
+			while (rsUsers2.next()) {
+				System.out.println("Nome: " + rsUsers2.getString("nome"));
+			}
+			
+			ResultSet rsWishes2 = connecctionFactory2.getConnectionDB().createStatement().executeQuery("SELECT * from wish");
+			System.out.println("---DESEJOS---");
+			while (rsWishes2.next()) {
+				System.out.println("Nome: " + rsWishes2.getString("nome"));
+			}	
+			
 		} catch (SQLException e) {
 			System.out.println("Erro ao conectar o banco de dados: " + e.getMessage());
 		} finally {
-			conn.closeConnection();
+			connecctionFactory1.closeConnection();
+			connecctionFactory2.closeConnection();
 		}
 	}
 }
