@@ -8,7 +8,7 @@ import utils.PasswordUtils;
 
 public class UserController {
 	
-	public void registerUserController(String name, String nickName, String email, String password) {
+	public boolean registerUserController(String name, String nickName, String email, String password) {
 		
 			String passwordHash = new PasswordUtils(password).getHash();
 			UserDao userDao = new UserDao();
@@ -22,6 +22,7 @@ public class UserController {
 //		        }
 				
 				userDao.insertUser(name, nickName, email, passwordHash);
+				return true;
 				
 			} catch (SQLException e) {
 				System.out.println("Erro ao executar o SQL: " + e.getMessage());
@@ -30,5 +31,6 @@ public class UserController {
 			} catch (IllegalArgumentException e) {
 		        System.out.println(e.getMessage());
 		    }
+			return false;
 	}
 }

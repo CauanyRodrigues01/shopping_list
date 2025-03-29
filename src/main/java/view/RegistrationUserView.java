@@ -111,10 +111,15 @@ public class RegistrationUserView extends JFrame {
 
                 // Chamando o controller para registrar o usuário
                 UserController newUser = new UserController();
-                newUser.registerUserController(name, nickName, email, password);
-
-                JOptionPane.showMessageDialog(RegistrationUserView.this, 
-                    "Cadastro realizado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+                boolean success = newUser.registerUserController(name, nickName, email, password);
+                
+                if (success) {
+                    JOptionPane.showMessageDialog(RegistrationUserView.this, 
+                            "Cadastro realizado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(RegistrationUserView.this, 
+                            "Algo de errado ocorreu no sistema, tente novamente!", "Erro", JOptionPane.ERROR_MESSAGE);
+                }
 
                 // Limpar os campos após o envio
                 nameField.setText("");
