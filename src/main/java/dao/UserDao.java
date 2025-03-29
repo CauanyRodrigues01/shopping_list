@@ -60,6 +60,29 @@ public class UserDao {
 	    }
 	}
 
+	public boolean isNickNameAlreadyUsed(String nickName) throws SQLException, ConnectionException {
+	    String sql = "SELECT COUNT(*) FROM user WHERE nick_name = ?";
+	    
+	    Connection connection = null;
+	    PreparedStatement ps = null;
+	    ResultSet rs = null;
+	    
+	    try {
+	    	connection = ConnectionDBSingleton.getConnection();
+	        ps = connection.prepareStatement(sql);
+	        ps.setString(1, nickName);
+	        rs = ps.executeQuery();
+	        rs.next();
+	        return rs.getInt(1) > 0;
+	    } catch (SQLException e) {
+	    	throw new SQLException("Erro ao verificar o NickName: " + e.getMessage());
+	    } finally {
+	    	if (rs != null) rs.close();
+	    	if (ps != null) ps.close();
+	    	if (connection != null) ConnectionDBSingleton.closeConnection();
+	    }
+	}
+
 	
 	//			PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 //			ps.setString(1, name);

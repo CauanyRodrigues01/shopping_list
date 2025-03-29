@@ -1,6 +1,5 @@
 package view;
 
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -22,17 +21,6 @@ public class LoginView extends JFrame {
     private JPanel login;
     private JTextField emailField;
     private JPasswordField passwordField;
-
-    public static void main(String[] args) {
-        EventQueue.invokeLater(() -> {
-            try {
-                LoginView frame = new LoginView();
-                frame.setVisible(true);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        });
-    }
 
     public LoginView() {
         setTitle("WishList - Login");

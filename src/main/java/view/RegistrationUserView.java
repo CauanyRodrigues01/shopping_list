@@ -1,6 +1,5 @@
 package view;
 
-import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -19,6 +18,7 @@ import controller.UserController;
 
 public class RegistrationUserView extends JFrame {
 
+	private UserController userController;
     private static final long serialVersionUID = 1L;
     private JPanel contentPane;
     private JTextField nameField;
@@ -26,20 +26,9 @@ public class RegistrationUserView extends JFrame {
     private JTextField emailField;
     private JPasswordField passwordField; // Campo de senha protegido
 
-    public static void main(String[] args) {
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    RegistrationUserView frame = new RegistrationUserView();
-                    frame.setVisible(true);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
-
-    public RegistrationUserView() {
+    public RegistrationUserView(UserController userController) {
+    	this.setUserController(userController);
+    	
         setTitle("WishList");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 900, 500);
@@ -110,15 +99,14 @@ public class RegistrationUserView extends JFrame {
                 }
 
                 // Chamando o controller para registrar o usuário
-                UserController newUser = new UserController();
-                boolean success = newUser.registerUserController(name, nickName, email, password);
+                String success = userController.registerUserController(name, nickName, email, password);
                 
-                if (success) {
+                if (success.equals("Sucesso!")) {
                     JOptionPane.showMessageDialog(RegistrationUserView.this, 
                             "Cadastro realizado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
                 } else {
                     JOptionPane.showMessageDialog(RegistrationUserView.this, 
-                            "Algo de errado ocorreu no sistema, tente novamente!", "Erro", JOptionPane.ERROR_MESSAGE);
+                            success, "Erro", JOptionPane.ERROR_MESSAGE);
                 }
 
                 // Limpar os campos após o envio
@@ -182,4 +170,12 @@ public class RegistrationUserView extends JFrame {
 
         contentPane.setLayout(gl_contentPane);
     }
+
+	public UserController getUserController() {
+		return userController;
+	}
+
+	public void setUserController(UserController userController) {
+		this.userController = userController;
+	}
 }

@@ -8,21 +8,26 @@ import utils.PasswordUtils;
 
 public class UserController {
 	
-	public boolean registerUserController(String name, String nickName, String email, String password) {
+	private UserDao userDao;
+	
+	public UserController(UserDao userDao) {
+		this.userDao = userDao;
+	}
+	
+	public String registerUserController(String name, String nickName, String email, String password) {
 		
 			String passwordHash = new PasswordUtils(password).getHash();
-			UserDao userDao = new UserDao();
 			
 			try {
 				if (userDao.isEmailAlreadyUsed(email)) {
-					throw new IllegalArgumentException("O e-mail já está em uso.");
+					return "O e-mail já está em uso.";
 				}
-//		        if (userDao.isNickNameAlreadyUsed(nickName)) {
-//		            throw new IllegalArgumentException("O nickname já está em uso.");
-//		        }
+		        if (userDao.isNickNameAlreadyUsed(nickName)) {
+		        	return "O nickname já está em uso.";
+		        }
 				
-				userDao.insertUser(name, nickName, email, passwordHash);
-				return true;
+				this.userDao.insertUser(name, nickName, email, passwordHash);
+				return "Sucesso!";
 				
 			} catch (SQLException e) {
 				System.out.println("Erro ao executar o SQL: " + e.getMessage());
@@ -31,6 +36,7 @@ public class UserController {
 			} catch (IllegalArgumentException e) {
 		        System.out.println(e.getMessage());
 		    }
-			return false;
+			return "Algo de errado ocorreu no sistema, tente novamente!";
+			
 	}
 }

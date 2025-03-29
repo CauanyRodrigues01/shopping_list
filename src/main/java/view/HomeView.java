@@ -1,9 +1,12 @@
 package view;
 
-import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import controller.UserController;
+import dao.UserDao;
+
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLabel;
@@ -18,18 +21,7 @@ public class HomeView extends JFrame {
 
     private static final long serialVersionUID = 1L;
     private JPanel home;
-
-    public static void main(String[] args) {
-        EventQueue.invokeLater(() -> {
-            try {
-                HomeView frame = new HomeView();
-                frame.setVisible(true);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        });
-    }
-
+    
     public HomeView() {
         setTitle("WishList - Home");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -60,7 +52,12 @@ public class HomeView extends JFrame {
         registerButton.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
         		HomeView.this.dispose(); // Fecha a tela de login
-        	    new RegistrationUserView().setVisible(true); // Abre a tela de cadastro
+        		
+                UserDao userDao = new UserDao();
+                UserController userController = new UserController(userDao);
+                
+                RegistrationUserView registrationView = new RegistrationUserView(userController);
+                registrationView.setVisible(true); // Abre a tela de cadastro
         	}
         });
 
