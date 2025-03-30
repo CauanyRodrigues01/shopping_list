@@ -29,7 +29,7 @@ public class RegistrationUserView extends JFrame {
     public RegistrationUserView(UserController userController) {
     	this.setUserController(userController);
     	
-        setTitle("WishList");
+        setTitle("Lista de compras - cadastro de usário");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 900, 500);
         contentPane = new JPanel();

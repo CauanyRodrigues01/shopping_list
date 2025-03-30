@@ -1,6 +1,6 @@
 package controller;
 
-public class WishController {
+public class ItemController {
 //	✅ Manipulam desejos:
 //
 //		markAsCompleted() – Marcar um desejo como concluído.

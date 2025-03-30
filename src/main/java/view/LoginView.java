@@ -23,7 +23,7 @@ public class LoginView extends JFrame {
     private JPasswordField passwordField;
 
     public LoginView() {
-        setTitle("WishList - Login");
+        setTitle("Lista de compras - Login");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 900, 500);
         setLocationRelativeTo(null); // Centraliza a janela na tela

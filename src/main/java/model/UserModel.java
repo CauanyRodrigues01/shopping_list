@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import lombok.*;
-import utils.PasswordUtils;
 
 //TODO Lançar uma exceção personalizada (como UserCreationException)
 //TODO Validar a complexidade da senha no momento da criação do usuário (como exigência de mínimo de caracteres, mistura de letras maiúsculas, minúsculas, números, etc.)
@@ -27,7 +26,7 @@ public class UserModel {
 	private String email;
 	private String password;
 	@Getter @Setter
-	private List<WishListModel> wishLists;
+	private List<ItemModel> itemList;
 
 	public UserModel(Integer id, String name, String nickName, String email, String password) {
 		this.id = id;
@@ -35,7 +34,7 @@ public class UserModel {
 		this.nickName = nickName;
 		this.email = email;
 		this.password = password;
-		this.wishLists = new ArrayList<>();
+		this.itemList = new ArrayList<>();
 	}
 	
 	public UserModel(String name, String nickName, String email, String password) {
@@ -43,51 +42,25 @@ public class UserModel {
 		this.nickName = nickName;
 		this.email = email;
 		this.password = password;
-		this.wishLists = new ArrayList<>();
+		this.itemList = new ArrayList<>();
 	}
 
-
-//	public boolean verifyPassword(String inputPassword) {
-//	    try {
-//	        return password.validatePassword(inputPassword);
-//	    } catch (NoSuchAlgorithmException e) {
-//			System.out.println("O algoritmo especificado não está disponível: " + e.getMessage());
-//			e.printStackTrace();
-//			return false;
-//		} catch (InvalidKeySpecException e) {
-//			System.out.println("Especificação da chave inválida: " + e.getMessage());
-//			e.printStackTrace();
-//			return false;
-//		}
-//	}
-	
-	// Adiciona uma lista de desejos
-	public void addWishList(WishListModel wishList) {
-		this.wishLists.add(wishList);
+	public void addItem(ItemModel item) {
+		this.itemList.add(item);
 	}
 	
-	// Remove uma lista de desejos
-	public void removedWishList(WishListModel wishList) {
-		this.wishLists.remove(wishList);
+	public void removedItem(ItemModel item) {
+		this.itemList.remove(item);
 	}
 	
-	// Retorna para visualização as listas de desejos não modificável
-	public List<WishListModel> getUserWishListsView() {
-	    return Collections.unmodifiableList(wishLists);
+
+	public void clearUserItemList() {
+		this.itemList.clear();
+	}
+	
+	// Retorna para visualização a lista de compra não modificável
+	public List<ItemModel> getUserItemListView() {
+	    return Collections.unmodifiableList(itemList);
 	}
 
-	// Retorna os quantidades de listas que o usuário possui
-	public int getWishSize() {
-		return this.wishLists.size();
-	}
-
-	// Esvazia as listas do usuário
-	public void clearUserWishLists() {
-		this.wishLists.clear();
-	}
-
-	// Verifica se tem alguma listas de desejo
-	public boolean hasWishList(WishListModel wishList) {
-		return wishLists.contains(wishList);
-	}
 }

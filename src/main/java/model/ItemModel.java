@@ -7,17 +7,12 @@ import lombok.*;
 @ToString
 @EqualsAndHashCode
 @NoArgsConstructor
-public class WishModel {
+public class ItemModel {
 	
 	private Integer id;
 	private String name;
-	private String description;
-	private String category;
-	private String link;
-	private Double price;
-	private String image;
+	private Integer quantity;
 	private Boolean isCompleted;
-	private WishListModel wishList;
 	
 	// Mudar o status do desejo como concluído
 	public void markAsCompleted() {

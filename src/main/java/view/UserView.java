@@ -16,7 +16,7 @@ public class UserView extends JFrame {
     private JScrollPane scrollPane;
 
     public UserView() {
-        setTitle("User View");
+        setTitle("Lista de compras - User View");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 900, 500);
         contentPane = new JPanel();
@@ -169,9 +169,9 @@ public class UserView extends JFrame {
         viewWishlistButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 wishlistArea.setVisible(true);
-                wishlistArea.setText("Carregando wishlists...\n"); // Simula o carregamento
+                wishlistArea.setText("Carregando itens...\n"); // Simula o carregamento
 
-                // Aqui você pode chamar um método para buscar as wishlists do usuário no banco
+                // Aqui você pode chamar um método para buscar os items do usuário no banco
                 wishlistArea.append("• Jogo de tabuleiro\n");
                 wishlistArea.append("• Livro de programação\n");
             }

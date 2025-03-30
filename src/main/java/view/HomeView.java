@@ -23,7 +23,7 @@ public class HomeView extends JFrame {
     private JPanel home;
     
     public HomeView() {
-        setTitle("WishList - Home");
+        setTitle("Lista de compras - Home");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 900, 500);  // Tamanho da tela
         home = new JPanel();
@@ -34,7 +34,7 @@ public class HomeView extends JFrame {
         gl_home.setAutoCreateContainerGaps(true);  // Adiciona espaços automáticos entre os componentes
         home.setLayout(gl_home);
 
-        JLabel title = new JLabel("BEM VINDO AO WISHLIST!");
+        JLabel title = new JLabel("BEM VINDO A LISTAS DE COMPRAS!");
         title.setFont(new Font("Tahoma", Font.PLAIN, 18));
         title.setHorizontalAlignment(SwingConstants.CENTER);
         
