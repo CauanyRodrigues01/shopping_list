@@ -88,4 +88,22 @@ public class PasswordUtils {
 		return this.passwordTreated;
 	}
 	
+	public static boolean verifyPassword(String inputPassowrd, String hashSalved) 
+	        throws NoSuchAlgorithmException, InvalidKeySpecException {
+	    String[] parts = hashSalved.split(":");
+	    int iterations = Integer.parseInt(parts[0]);
+	    byte[] salt = fromHex(parts[1]);
+	    byte[] hash = fromHex(parts[2]);
+
+	    PBEKeySpec spec = new PBEKeySpec(inputPassowrd.toCharArray(), salt, iterations, hash.length * 8);
+	    SecretKeyFactory skf = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
+	    byte[] testHash = skf.generateSecret(spec).getEncoded();
+
+	    int diff = hash.length ^ testHash.length;
+	    for (int i = 0; i < hash.length && i < testHash.length; i++) {
+	        diff |= hash[i] ^ testHash[i];
+	    }
+	    return diff == 0;
+	}
+
 }
