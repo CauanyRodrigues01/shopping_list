@@ -12,7 +12,6 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import javax.swing.JPasswordField;
 import controller.UserController;
 
 public class EditUserView extends JFrame {
@@ -72,6 +71,15 @@ public class EditUserView extends JFrame {
                 nickNameField.setText("");
                 emailField.setText("");
             }
+        });      
+        
+        JButton backButton = new JButton("Voltar");
+        backButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
+        backButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            	EditUserView.this.dispose(); // Fecha a tela de login
+			    new UserView(userController).setVisible(true);
+            }
         });
 
 
@@ -86,7 +94,8 @@ public class EditUserView extends JFrame {
                         .addComponent(nickNameLabel, GroupLayout.PREFERRED_SIZE, 200, GroupLayout.PREFERRED_SIZE)
                         .addComponent(nickNameField, GroupLayout.PREFERRED_SIZE, 802, GroupLayout.PREFERRED_SIZE)
                         .addComponent(emailLabel, GroupLayout.PREFERRED_SIZE, 200, GroupLayout.PREFERRED_SIZE)
-                        .addComponent(emailField, GroupLayout.PREFERRED_SIZE, 802, GroupLayout.PREFERRED_SIZE))
+                        .addComponent(emailField, GroupLayout.PREFERRED_SIZE, 802, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(backButton, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE))
                     .addContainerGap(57, Short.MAX_VALUE))
                 .addGroup(Alignment.CENTER,
                     gl_contentPane.createSequentialGroup()
@@ -116,6 +125,8 @@ public class EditUserView extends JFrame {
                     .addComponent(emailField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                     .addGap(55)
                     .addComponent(sendButton)
+                    .addGap(18)
+                    .addComponent(backButton)
                     .addContainerGap(177, Short.MAX_VALUE))
         );
 

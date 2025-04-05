@@ -1,190 +1,95 @@
 package view;
 
-import javax.swing.*;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import controller.ItemController;
+import controller.UserController;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.SwingConstants;
+import javax.swing.JButton;
 
 public class UserView extends JFrame {
-    private JPanel contentPane;
-    private JTextField nameField;
-    private JTextField emailField;
-    private JTextField nicknameField;
-    private JButton editButton, saveButton, addWishlistButton, viewWishlistButton;
-    private JTextArea wishlistArea;
-    private JScrollPane scrollPane;
 
-    public UserView() {
-        setTitle("Lista de compras - User View");
+    private static final long serialVersionUID = 1L;
+    private JPanel userView;
+    
+    public UserView(UserController userController) {
+        setTitle("Lista de compras - Usuário");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 900, 500);
-        contentPane = new JPanel();
-        contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-        setContentPane(contentPane);
+        setLocationRelativeTo(null);
+        
+        userView = new JPanel();
+        userView.setBorder(new EmptyBorder(5, 5, 5, 5));
+        setContentPane(userView);
+        
+        GroupLayout gl_home = new GroupLayout(userView);
+        gl_home.setAutoCreateContainerGaps(true);  // Adiciona espaços automáticos entre os componentes
+        userView.setLayout(gl_home);
 
-        // Criando os componentes do layout
-        JLabel title = new JLabel("VISUALIZAÇÃO DE USUÁRIO");
+        JLabel title = new JLabel("USUÁRIO");
         title.setFont(new Font("Tahoma", Font.PLAIN, 18));
         title.setHorizontalAlignment(SwingConstants.CENTER);
-
-        JLabel nameLabel = new JLabel("Nome completo:");
-        nameLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
-
-        JLabel emailLabel = new JLabel("Email:");
-        emailLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
-
-        JLabel nicknameLabel = new JLabel("Nickname:");
-        nicknameLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
-
-        nameField = new JTextField();
-        nameField.setFont(new Font("Tahoma", Font.PLAIN, 14));
-        nameField.setColumns(10);
-        nameField.setEditable(false);
-
-        emailField = new JTextField();
-        emailField.setFont(new Font("Tahoma", Font.PLAIN, 14));
-        emailField.setColumns(10);
-        emailField.setEditable(false);
-
-        nicknameField = new JTextField();
-        nicknameField.setFont(new Font("Tahoma", Font.PLAIN, 14));
-        nicknameField.setColumns(10);
-        nicknameField.setEditable(false);
-
-        editButton = new JButton("Editar Meus Dados");
-        editButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
-
-        saveButton = new JButton("Salvar");
-        saveButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
-        saveButton.setVisible(false);
-
-        addWishlistButton = new JButton("Adicionar Wishlist");
-        addWishlistButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
-
-        viewWishlistButton = new JButton("Ver Wishlists");
-        viewWishlistButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
-
-        wishlistArea = new JTextArea(10, 30);
-        wishlistArea.setFont(new Font("Tahoma", Font.PLAIN, 14));
-        wishlistArea.setEditable(false);
-        wishlistArea.setVisible(false);
-
-        // Criando o JScrollPane e incluindo o wishlistArea nele
-        scrollPane = new JScrollPane();
-        scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-        scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER); // Removendo rolagem horizontal
-
-        JPanel panel = new JPanel();
-        GroupLayout gl_panel = new GroupLayout(panel);
-        gl_panel.setHorizontalGroup(
-            gl_panel.createParallelGroup(GroupLayout.Alignment.LEADING)
-                .addGroup(gl_panel.createSequentialGroup()
-                    .addGap(32)
-                    .addGroup(gl_panel.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addComponent(title, GroupLayout.PREFERRED_SIZE, 300, GroupLayout.PREFERRED_SIZE)
-                        .addComponent(nameLabel, GroupLayout.PREFERRED_SIZE, 200, GroupLayout.PREFERRED_SIZE)
-                        .addComponent(nameField, GroupLayout.PREFERRED_SIZE, 802, GroupLayout.PREFERRED_SIZE)
-                        .addComponent(nicknameLabel, GroupLayout.PREFERRED_SIZE, 200, GroupLayout.PREFERRED_SIZE)
-                        .addComponent(nicknameField, GroupLayout.PREFERRED_SIZE, 802, GroupLayout.PREFERRED_SIZE)
-                        .addComponent(emailLabel, GroupLayout.PREFERRED_SIZE, 200, GroupLayout.PREFERRED_SIZE)
-                        .addComponent(emailField, GroupLayout.PREFERRED_SIZE, 802, GroupLayout.PREFERRED_SIZE)
-                        .addComponent(editButton, GroupLayout.PREFERRED_SIZE, 200, GroupLayout.PREFERRED_SIZE)
-                        .addComponent(saveButton, GroupLayout.PREFERRED_SIZE, 200, GroupLayout.PREFERRED_SIZE)
-                        .addComponent(addWishlistButton, GroupLayout.PREFERRED_SIZE, 200, GroupLayout.PREFERRED_SIZE)
-                        .addComponent(viewWishlistButton, GroupLayout.PREFERRED_SIZE, 200, GroupLayout.PREFERRED_SIZE)
-                        .addComponent(wishlistArea, GroupLayout.PREFERRED_SIZE, 802, GroupLayout.PREFERRED_SIZE)) // Adiciona o wishlistArea
-                    .addContainerGap(57, Short.MAX_VALUE))
-        );
-        gl_panel.setVerticalGroup(
-            gl_panel.createParallelGroup(GroupLayout.Alignment.LEADING)
-                .addGroup(gl_panel.createSequentialGroup()
-                    .addGap(27)
-                    .addComponent(title)
-                    .addGap(45)
-                    .addComponent(nameLabel)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                    .addComponent(nameField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                    .addGap(18)
-                    .addComponent(nicknameLabel)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                    .addComponent(nicknameField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                    .addGap(18)
-                    .addComponent(emailLabel)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                    .addComponent(emailField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                    .addGap(18)
-                    .addComponent(editButton)
-                    .addGap(18)
-                    .addComponent(saveButton)
-                    .addGap(18)
-                    .addComponent(addWishlistButton)
-                    .addGap(18)
-                    .addComponent(viewWishlistButton)
-                    .addGap(18)
-                    .addComponent(wishlistArea, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE) // Ajusta a exibição do wishlistArea
-                    .addContainerGap(77, Short.MAX_VALUE))
-        );
-
-        panel.setLayout(gl_panel);
-
-        // Adiciona o painel no JScrollPane
-        scrollPane.setViewportView(panel);
         
-        // Define o JScrollPane como o painel principal da janela
-        contentPane.setLayout(new java.awt.BorderLayout());
-        contentPane.add(scrollPane, java.awt.BorderLayout.CENTER);
+        JButton editUserButton = new JButton("Editar dados");
+        editUserButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
+        editUserButton.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		UserView.this.dispose(); // Fecha a tela de usuário
+        	    new EditUserView(userController).setVisible(true); // Abre a tela de edição
+        	}
+        });
 
-        // Eventos dos botões
-        editButton.addActionListener(new ActionListener() {
+        JButton showItemsButton = new JButton("Meus itens");
+        showItemsButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
+        showItemsButton.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		UserView.this.dispose(); // Fecha a tela do usuário
+        		ItemController itemController = new ItemController();
+        		new ItemListView(itemController, userController).setVisible(true); // Abre a tela de itens
+        	}
+        });
+        
+        JButton backButton = new JButton("Voltar");
+        backButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
+        backButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                // Habilita os campos para edição
-                nameField.setEditable(true);
-                nicknameField.setEditable(true);
-                emailField.setEditable(true);
-                saveButton.setVisible(true);
-                editButton.setVisible(false);
+            	UserView.this.dispose(); // Fecha a tela de login
+			    new LoginView().setVisible(true);
             }
         });
 
-        saveButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                // Salva as alterações
-                String name = nameField.getText().trim();
-                String nickname = nicknameField.getText().trim();
-                String email = emailField.getText().trim();
+        // Centralizando os componentes na tela
+        gl_home.setHorizontalGroup(
+            gl_home.createSequentialGroup()
+                .addContainerGap(200, Short.MAX_VALUE)  // Garante que o conteúdo não encoste nas bordas
+                .addGroup(gl_home.createParallelGroup(Alignment.CENTER)
+                    .addComponent(title)
+                    .addComponent(editUserButton, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE)
+                    .addComponent(showItemsButton, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE)
+                    .addComponent(backButton, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(200, Short.MAX_VALUE)  // Garante que o conteúdo não encoste nas bordas
+        );
 
-                // Aqui você pode chamar um método no controlador para atualizar o usuário no banco
-                JOptionPane.showMessageDialog(UserView.this, "Dados atualizados com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
-
-                // Desabilita os campos de edição
-                nameField.setEditable(false);
-                nicknameField.setEditable(false);
-                emailField.setEditable(false);
-                saveButton.setVisible(false);
-                editButton.setVisible(true);
-            }
-        });
-
-        viewWishlistButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                wishlistArea.setVisible(true);
-                wishlistArea.setText("Carregando itens...\n"); // Simula o carregamento
-
-                // Aqui você pode chamar um método para buscar os items do usuário no banco
-                wishlistArea.append("• Jogo de tabuleiro\n");
-                wishlistArea.append("• Livro de programação\n");
-            }
-        });
-    }
-
-    public static void main(String[] args) {
-        // Cria e exibe a tela
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                UserView frame = new UserView();
-                frame.setVisible(true);  // Garante que a janela será visível
-            }
-        });
+        // Vertical grouping for layout
+        gl_home.setVerticalGroup(
+            gl_home.createSequentialGroup()
+                .addGap(80)  // Espaço no topo
+                .addComponent(title)
+                .addGap(40)
+                .addComponent(editUserButton)
+                .addGap(18)
+                .addComponent(showItemsButton)
+                .addGap(18)
+                .addComponent(backButton)
+                .addContainerGap(80, Short.MAX_VALUE)  // Espaço na parte inferior
+        );
     }
 }

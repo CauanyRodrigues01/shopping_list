@@ -2,9 +2,10 @@ package view;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 import javax.swing.border.EmptyBorder;
+import controller.ItemController;
 import controller.UserController;
-import dao.UserDao;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLabel;
@@ -14,51 +15,48 @@ import java.awt.event.ActionListener;
 import javax.swing.SwingConstants;
 import javax.swing.JButton;
 
-public class HomeView extends JFrame {
+public class ItemListView extends JFrame {
 
     private static final long serialVersionUID = 1L;
-    private JPanel home;
+    private JPanel itemListView;
+    private JTextArea shoppingArea;
     
-    public HomeView() {
-        setTitle("Lista de compras - Home");
+    public ItemListView(ItemController itemController, UserController userController) {
+        setTitle("Lista de compras - Itens");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 900, 500);
         setLocationRelativeTo(null);
         
-        home = new JPanel();
-        home.setBorder(new EmptyBorder(5, 5, 5, 5));
-        setContentPane(home);
+        itemListView = new JPanel();
+        itemListView.setBorder(new EmptyBorder(5, 5, 5, 5));
+        setContentPane(itemListView);
         
-        GroupLayout gl_home = new GroupLayout(home);
+        GroupLayout gl_home = new GroupLayout(itemListView);
         gl_home.setAutoCreateContainerGaps(true);  // Adiciona espaços automáticos entre os componentes
-        home.setLayout(gl_home);
+        itemListView.setLayout(gl_home);
 
-        JLabel title = new JLabel("BEM VINDO A LISTAS DE COMPRAS!");
+        JLabel title = new JLabel("MEUS ITENS");
         title.setFont(new Font("Tahoma", Font.PLAIN, 18));
         title.setHorizontalAlignment(SwingConstants.CENTER);
         
-        JButton loginButton = new JButton("Entrar");
-        loginButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
-        loginButton.addActionListener(new ActionListener() {
+        JButton addItemButton = new JButton("Adicionar item");
+        addItemButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
+        addItemButton.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
-        		HomeView.this.dispose(); // Fecha a tela de login
-        	    new LoginView().setVisible(true); // Abre a tela de login
+        		ItemListView.this.dispose(); // Fecha a tela de itens
+        	    new AddItemView(itemController).setVisible(true); // Abre a tela de edição
         	}
+        });
+        
+        JButton backButton = new JButton("Voltar");
+        backButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
+        backButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            	ItemListView.this.dispose(); // Fecha a tela de login
+			    new UserView(userController).setVisible(true);
+            }
         });
 
-        JButton registerButton = new JButton("Cadastro");
-        registerButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
-        registerButton.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent e) {
-        		HomeView.this.dispose(); // Fecha a tela de login
-        		
-                UserDao userDao = new UserDao();
-                UserController userController = new UserController(userDao);
-                
-                RegistrationUserView registrationView = new RegistrationUserView(userController);
-                registrationView.setVisible(true); // Abre a tela de cadastro
-        	}
-        });
 
         // Centralizando os componentes na tela
         gl_home.setHorizontalGroup(
@@ -66,8 +64,8 @@ public class HomeView extends JFrame {
                 .addContainerGap(200, Short.MAX_VALUE)  // Garante que o conteúdo não encoste nas bordas
                 .addGroup(gl_home.createParallelGroup(Alignment.CENTER)
                     .addComponent(title)
-                    .addComponent(loginButton, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE)
-                    .addComponent(registerButton, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE))
+                    .addComponent(addItemButton, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE)
+                    .addComponent(backButton, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(200, Short.MAX_VALUE)  // Garante que o conteúdo não encoste nas bordas
         );
 
@@ -77,9 +75,9 @@ public class HomeView extends JFrame {
                 .addGap(80)  // Espaço no topo
                 .addComponent(title)
                 .addGap(40)
-                .addComponent(loginButton)
-                .addGap(18)
-                .addComponent(registerButton)
+                .addComponent(addItemButton)
+                .addGap(40)
+                .addComponent(backButton)
                 .addContainerGap(80, Short.MAX_VALUE)  // Espaço na parte inferior
         );
     }
