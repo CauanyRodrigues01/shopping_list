@@ -1,9 +1,12 @@
 package controller;
 
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.sql.SQLException;
 
 import dao.UserDao;
 import exceptions.ConnectionException;
+import model.UserModel;
 import utils.PasswordUtils;
 
 public class UserController {
@@ -19,10 +22,10 @@ public class UserController {
 			String passwordHash = new PasswordUtils(password).getHash();
 			
 			try {
-				if (userDao.isEmailAlreadyUsed(email)) {
+				if (this.userDao.isEmailAlreadyUsed(email)) {
 					return "O e-mail já está em uso.";
 				}
-		        if (userDao.isNickNameAlreadyUsed(nickName)) {
+		        if (this.userDao.isNickNameAlreadyUsed(nickName)) {
 		        	return "O nickname já está em uso.";
 		        }
 				
@@ -37,6 +40,28 @@ public class UserController {
 		        System.out.println(e.getMessage());
 		    }
 			return "Algo de errado ocorreu no sistema, tente novamente!";
-			
+		
 	}
+	
+	public boolean loginUserController(String email, String inputPassword) throws NoSuchAlgorithmException, InvalidKeySpecException {
+		
+		try {
+			UserModel user = this.userDao.searchByEmail(email);
+			if (user != null) {
+				boolean isPasswordCorrect =	new PasswordUtils("").verifyPassword(inputPassword, user.getPassword());
+				if (isPasswordCorrect) {
+					return true;
+				}
+			}
+			
+		} catch (SQLException e) {
+			System.out.println("Erro ao executar o SQL: " + e.getMessage());
+		} catch (ConnectionException e) {
+			System.out.println("Erro ao conectar-se ao banco de dados: " + e.getMessage());
+		} catch (IllegalArgumentException e) {
+	        System.out.println(e.getMessage());
+	    }
+		return false;
+		
+}
 }
