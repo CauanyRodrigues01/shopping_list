@@ -9,7 +9,7 @@ public class ConnectionDBFactory {
 	private Connection connection;
 	
 	public ConnectionDBFactory() {
-		String url = "jdbc:mysql://localhost/WishList";
+		String url = "jdbc:mysql://localhost/shopping_list";
 		String user = "root";
 		String password = "cacau21";
 		

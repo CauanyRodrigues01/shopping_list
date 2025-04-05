@@ -13,7 +13,7 @@ public class ConnectionDBSingleton {
 	private static Connection newConnection() throws ConnectionException {
 		
 		Connection con = null;
-		String url = "jdbc:mysql://localhost/WishList";
+		String url = "jdbc:mysql://localhost/shopping_list";
 		String user = "root";
 		String password = "cacau21";
 		
