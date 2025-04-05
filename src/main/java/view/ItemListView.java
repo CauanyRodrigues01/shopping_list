@@ -21,7 +21,7 @@ public class ItemListView extends JFrame {
     private JPanel itemListView;
     private JTextArea shoppingArea;
     
-    public ItemListView(ItemController itemController, UserController userController) {
+    public ItemListView(ItemController itemController, UserController userController, Integer user_id) {
         setTitle("Lista de compras - Itens");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 900, 500);
@@ -44,7 +44,7 @@ public class ItemListView extends JFrame {
         addItemButton.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
         		ItemListView.this.dispose(); // Fecha a tela de itens
-        	    new AddItemView(itemController).setVisible(true); // Abre a tela de edição
+        	    new AddItemView(itemController, userController, user_id).setVisible(true); // Abre a tela de edição
         	}
         });
         
@@ -53,7 +53,7 @@ public class ItemListView extends JFrame {
         backButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             	ItemListView.this.dispose(); // Fecha a tela de login
-			    new UserView(userController).setVisible(true);
+			    new UserView(userController, user_id).setVisible(true);
             }
         });
 

@@ -13,6 +13,7 @@ public class ItemModel {
 	private String name;
 	private Integer quantity;
 	private Boolean isCompleted;
+	private Integer user_id;
 	
 	// Mudar o status do desejo como concluído
 	public void markAsCompleted() {

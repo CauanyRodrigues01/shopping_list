@@ -24,7 +24,7 @@ public class EditUserView extends JFrame {
     private JTextField nickNameField;
     private JTextField emailField;
 
-    public EditUserView(UserController userController) {
+    public EditUserView(UserController userController, Integer user_id) {
     	
         setTitle("Lista de compras - edição de usário");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -87,7 +87,7 @@ public class EditUserView extends JFrame {
         backButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             	EditUserView.this.dispose(); // Fecha a tela de login
-			    new UserView(userController).setVisible(true);
+			    new UserView(userController, user_id).setVisible(true);
             }
         });
 

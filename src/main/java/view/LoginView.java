@@ -5,6 +5,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
+import java.sql.SQLException;
+
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -18,6 +20,7 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.border.EmptyBorder;
 import controller.UserController;
 import dao.UserDao;
+import exceptions.ConnectionException;
 
 public class LoginView extends JFrame {
 
@@ -92,13 +95,14 @@ public class LoginView extends JFrame {
                     return;
                 }
                 
-                UserDao userDao = new UserDao();
-                UserController userController = new UserController(userDao);
+                UserController userController = new UserController();
                 
                 try {
 					if (userController.loginUserController(email, password)) {
+						Integer user_id;
+						user_id = userController.getUserIdByEmailControler(email);
 						LoginView.this.dispose(); // Fecha a tela de login
-					    new UserView(userController).setVisible(true); // Abre a tela do user
+					    new UserView(userController, user_id).setVisible(true); // Abre a tela do user
 					} else {
 	                    JOptionPane.showMessageDialog(LoginView.this,
 	                            "Senha ou email incorreto!", "Erro", JOptionPane.ERROR_MESSAGE);
@@ -106,6 +110,12 @@ public class LoginView extends JFrame {
 					}
 				} catch (NoSuchAlgorithmException | InvalidKeySpecException e1) {
 					System.out.println("Erro ao verificar email e senha: " + e1.getMessage());
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (ConnectionException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
 				}
                 
                 emailField.setText("");

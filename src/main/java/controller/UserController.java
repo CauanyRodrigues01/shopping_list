@@ -62,6 +62,9 @@ public class UserController {
 	        System.out.println(e.getMessage());
 	    }
 		return false;
-		
-}
+	}
+	
+	public Integer getUserIdByEmailControler(String email) throws SQLException, ConnectionException {
+		return this.userDao.getUserIdByEmail(email);
+	}
 }

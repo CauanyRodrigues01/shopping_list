@@ -11,7 +11,7 @@ public class UserDao {
 	
 	public void insertUser(String name, String nickName, String email, String password_hash) throws SQLException, ConnectionException {
 		
-		String sql = "INSERT INTO user (nome, nick_name, email, password_hash) VALUES (?, ?, ?, ?)";
+		String sql = "INSERT INTO user (name, nick_name, email, password_hash) VALUES (?, ?, ?, ?)";
 		
 		Connection connection = null;
 		PreparedStatement ps = null;
@@ -50,11 +50,10 @@ public class UserDao {
 	        ps = connection.prepareStatement(sql);
 	        ps.setString(1, email);
 	        rs = ps.executeQuery();
-	        
 	        if (rs.next()) {
 	        	return new UserModel(
 	        			rs.getInt("id"),
-	        			rs.getString("nome"),
+	        			rs.getString("name"),
 	        			rs.getString("nick_name"),
 	        			rs.getString("email"),
 	        			rs.getString("password_hash")
@@ -117,17 +116,32 @@ public class UserDao {
 	    	if (connection != null) ConnectionDBSingleton.closeConnection();
 	    }
 	}
-
 	
-	//			PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-//			ps.setString(1, name);
-//			ps.setString(2, nickName);
-//			ps.setString(3, email);
-//			ps.setString(4, password);
-//			ps.execute(); //User gerado no BD
-//			
-//			ResultSet rs = ps.getGeneratedKeys();
-//			if (rs.next()) {
-//				UserModel p = new UserModel(rs.getInt(1), name, nickName, email, password);
-//			}
+	public Integer getUserIdByEmail(String email) throws SQLException, ConnectionException {
+	    String sql = "SELECT id FROM user WHERE email = ?";
+	    
+	    Connection connection = null;
+	    PreparedStatement ps = null;
+	    ResultSet rs = null;
+	    
+	    try {
+	        connection = ConnectionDBSingleton.getConnection();
+	        ps = connection.prepareStatement(sql);
+	        ps.setString(1, email);
+	        rs = ps.executeQuery();
+	        
+	        if (rs.next()) {
+	            return rs.getInt("id");
+	        }
+	        
+	    } catch (SQLException e) {
+	        throw new SQLException("Erro ao buscar ID do usuário por email: " + e.getMessage());
+	    } finally {
+	        if (rs != null) rs.close();
+	        if (ps != null) ps.close();
+	        if (connection != null) ConnectionDBSingleton.closeConnection();
+	    }
+
+	    return null; // Caso o e-mail não seja encontrado
+	}
 }

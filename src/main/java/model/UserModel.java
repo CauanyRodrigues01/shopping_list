@@ -25,7 +25,7 @@ public class UserModel {
 	@Getter @Setter
 	private String email;
 	@Getter
-	private String password;
+	private String password_hash;
 	@Getter @Setter
 	private List<ItemModel> itemList;
 
@@ -34,7 +34,7 @@ public class UserModel {
 		this.name = name;
 		this.nickName = nickName;
 		this.email = email;
-		this.password = password;
+		this.password_hash = password;
 		this.itemList = new ArrayList<>();
 	}
 	
@@ -42,7 +42,7 @@ public class UserModel {
 		this.name = name;
 		this.nickName = nickName;
 		this.email = email;
-		this.password = password;
+		this.password_hash = password;
 		this.itemList = new ArrayList<>();
 	}
 

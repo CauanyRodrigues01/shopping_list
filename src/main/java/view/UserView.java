@@ -3,7 +3,6 @@ package view;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-
 import controller.ItemController;
 import controller.UserController;
 import javax.swing.GroupLayout;
@@ -20,7 +19,7 @@ public class UserView extends JFrame {
     private static final long serialVersionUID = 1L;
     private JPanel userView;
     
-    public UserView(UserController userController) {
+    public UserView(UserController userController, Integer user_id) {
         setTitle("Lista de compras - Usuário");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 900, 500);
@@ -43,7 +42,7 @@ public class UserView extends JFrame {
         editUserButton.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
         		UserView.this.dispose(); // Fecha a tela de usuário
-        	    new EditUserView(userController).setVisible(true); // Abre a tela de edição
+        	    new EditUserView(userController, user_id).setVisible(true); // Abre a tela de edição
         	}
         });
 
@@ -53,7 +52,7 @@ public class UserView extends JFrame {
         	public void actionPerformed(ActionEvent e) {
         		UserView.this.dispose(); // Fecha a tela do usuário
         		ItemController itemController = new ItemController();
-        		new ItemListView(itemController, userController).setVisible(true); // Abre a tela de itens
+        		new ItemListView(itemController, userController, user_id).setVisible(true); // Abre a tela de itens
         	}
         });
         
