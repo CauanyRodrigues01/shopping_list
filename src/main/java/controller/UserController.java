@@ -13,8 +13,8 @@ public class UserController {
 	
 	private UserDao userDao;
 	
-	public UserController(UserDao userDao) {
-		this.userDao = userDao;
+	public UserController() {
+		this.userDao = new UserDao();
 	}
 	
 	public String registerUserController(String name, String nickName, String email, String password) {
@@ -48,7 +48,7 @@ public class UserController {
 		try {
 			UserModel user = this.userDao.searchByEmail(email);
 			if (user != null) {
-				boolean isPasswordCorrect =	new PasswordUtils("").verifyPassword(inputPassword, user.getPassword());
+				boolean isPasswordCorrect =	new PasswordUtils("").verifyPassword(inputPassword, user.getPassword_hash());
 				if (isPasswordCorrect) {
 					return true;
 				}

@@ -4,7 +4,6 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import controller.UserController;
-import dao.UserDao;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLabel;
@@ -52,8 +51,7 @@ public class HomeView extends JFrame {
         	public void actionPerformed(ActionEvent e) {
         		HomeView.this.dispose(); // Fecha a tela de login
         		
-                UserDao userDao = new UserDao();
-                UserController userController = new UserController(userDao);
+                UserController userController = new UserController();
                 
                 RegistrationUserView registrationView = new RegistrationUserView(userController);
                 registrationView.setVisible(true); // Abre a tela de cadastro
