@@ -25,7 +25,9 @@ public class HomeView extends JFrame {
     public HomeView() {
         setTitle("Lista de compras - Home");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(100, 100, 900, 500);  // Tamanho da tela
+        setBounds(100, 100, 900, 500);
+        setLocationRelativeTo(null);
+        
         home = new JPanel();
         home.setBorder(new EmptyBorder(5, 5, 5, 5));
         setContentPane(home);
