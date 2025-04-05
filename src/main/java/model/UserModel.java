@@ -24,6 +24,7 @@ public class UserModel {
 	private String nickName;
 	@Getter @Setter
 	private String email;
+	@Getter
 	private String password;
 	@Getter @Setter
 	private List<ItemModel> itemList;
@@ -49,7 +50,7 @@ public class UserModel {
 		this.itemList.add(item);
 	}
 	
-	public void removedItem(ItemModel item) {
+	public void removeItem(ItemModel item) {
 		this.itemList.remove(item);
 	}
 	
