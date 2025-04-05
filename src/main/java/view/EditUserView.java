@@ -6,6 +6,8 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.SwingConstants;
 import javax.swing.JTextField;
@@ -65,6 +67,13 @@ public class EditUserView extends JFrame {
                 String name = nameField.getText().trim();
                 String nickName = nickNameField.getText().trim();
                 String email = emailField.getText().trim();
+                
+                // Validação de campos obrigatórios
+                if (name.isEmpty() || nickName.isEmpty() || email.isEmpty()) {
+                    JOptionPane.showMessageDialog(EditUserView.this, 
+                        "Por favor, preencha todos os campos!", "Erro", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
 
                 // Limpar os campos após o envio
                 nameField.setText("");
