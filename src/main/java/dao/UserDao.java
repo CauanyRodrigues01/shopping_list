@@ -5,10 +5,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import exceptions.ConnectionException;
+import model.UserModel;
 
 public class UserDao {
 	
-	public void insertUser(String name, String nickName, String email, String password) throws SQLException, ConnectionException {
+	public void insertUser(String name, String nickName, String email, String password_hash) throws SQLException, ConnectionException {
 		
 		String sql = "INSERT INTO user (nome, nick_name, email, password_hash) VALUES (?, ?, ?, ?)";
 		
@@ -21,7 +22,7 @@ public class UserDao {
 			ps.setString(1, name);
 			ps.setString(2, nickName);
 			ps.setString(3, email);
-			ps.setString(4, password);
+			ps.setString(4, password_hash);
 			ps.executeUpdate();
 			System.out.println("Usuário inserido com sucesso!");
 			    
@@ -35,6 +36,40 @@ public class UserDao {
 	    	if (ps != null) ps.close();
 	    	if (connection != null) ConnectionDBSingleton.closeConnection();
 	    }
+	}
+	
+	public UserModel searchByEmail(String email) throws SQLException, ConnectionException {
+	    String sql = "SELECT * FROM user WHERE email = ?";
+	    
+	    Connection connection = null;
+	    PreparedStatement ps = null;
+	    ResultSet rs = null;
+	    
+	    try {
+	    	connection = ConnectionDBSingleton.getConnection();
+	        ps = connection.prepareStatement(sql);
+	        ps.setString(1, email);
+	        rs = ps.executeQuery();
+	        
+	        if (rs.next()) {
+	        	return new UserModel(
+	        			rs.getInt("id"),
+	        			rs.getString("nome"),
+	        			rs.getString("nick_name"),
+	        			rs.getString("email"),
+	        			rs.getString("password_hash")
+	        	);
+	        }
+	        
+	    } catch (SQLException e) {
+	    	throw new SQLException("Erro ao realizar login: " + e.getMessage());
+	    } finally {
+	    	if (rs != null) rs.close();
+	    	if (ps != null) ps.close();
+	    	if (connection != null) ConnectionDBSingleton.closeConnection();
+	    }
+
+        return null;
 	}
 
 	public boolean isEmailAlreadyUsed(String email) throws SQLException, ConnectionException {
