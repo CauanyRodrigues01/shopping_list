@@ -17,24 +17,23 @@ import javax.swing.JPasswordField;
 import controller.UserController;
 
 public class RegistrationUserView extends JFrame {
-
-	private UserController userController;
     private static final long serialVersionUID = 1L;
-    private JPanel contentPane;
+    private JPanel registrationUser;
     private JTextField nameField;
     private JTextField nickNameField;
     private JTextField emailField;
     private JPasswordField passwordField; // Campo de senha protegido
 
     public RegistrationUserView(UserController userController) {
-    	this.setUserController(userController);
     	
         setTitle("Lista de compras - cadastro de usário");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 900, 500);
-        contentPane = new JPanel();
-        contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-        setContentPane(contentPane);
+        setLocationRelativeTo(null); 
+        
+        registrationUser = new JPanel();
+        registrationUser.setBorder(new EmptyBorder(5, 5, 5, 5));
+        setContentPane(registrationUser);
 
         JLabel title = new JLabel("CADASTRO DE USUÁRIO");
         title.setFont(new Font("Tahoma", Font.PLAIN, 18));
@@ -67,6 +66,15 @@ public class RegistrationUserView extends JFrame {
         passwordField = new JPasswordField();
         passwordField.setFont(new Font("Tahoma", Font.PLAIN, 14));
         passwordField.setColumns(10);
+        
+        JButton backButton = new JButton("Voltar");
+        backButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
+        backButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            	RegistrationUserView.this.dispose(); // Fecha a tela de registro
+			    new HomeView().setVisible(true);
+            }
+        });
 
         JButton sendButton = new JButton("ENVIAR");
         sendButton.setFont(new Font("Tahoma", Font.PLAIN, 18));
@@ -118,7 +126,7 @@ public class RegistrationUserView extends JFrame {
         });
 
 
-        GroupLayout gl_contentPane = new GroupLayout(contentPane);
+        GroupLayout gl_contentPane = new GroupLayout(registrationUser);
         gl_contentPane.setHorizontalGroup(
             gl_contentPane.createParallelGroup(Alignment.LEADING)
                 .addGroup(gl_contentPane.createSequentialGroup()
@@ -138,7 +146,8 @@ public class RegistrationUserView extends JFrame {
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(gl_contentPane.createParallelGroup(Alignment.CENTER)
                             .addComponent(title, GroupLayout.PREFERRED_SIZE, 300, GroupLayout.PREFERRED_SIZE)
-                            .addComponent(sendButton, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE))
+                            .addComponent(sendButton, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE)
+                            .addComponent(backButton, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE))
         );
 
@@ -165,17 +174,11 @@ public class RegistrationUserView extends JFrame {
                     .addComponent(passwordField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                     .addGap(55)
                     .addComponent(sendButton)
+                    .addGap(10)
+                    .addComponent(backButton)
                     .addContainerGap(177, Short.MAX_VALUE))
         );
 
-        contentPane.setLayout(gl_contentPane);
+        registrationUser.setLayout(gl_contentPane);
     }
-
-	public UserController getUserController() {
-		return userController;
-	}
-
-	public void setUserController(UserController userController) {
-		this.userController = userController;
-	}
 }
