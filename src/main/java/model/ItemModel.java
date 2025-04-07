@@ -2,11 +2,7 @@ package model;
 
 import lombok.*;
 
-@Getter
-@Setter
-@ToString
-@EqualsAndHashCode
-@NoArgsConstructor
+@Data @NoArgsConstructor
 public class ItemModel {
 	
 	private Integer id;

@@ -1,9 +1,10 @@
 package controller;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import dao.ItemDao;
 import exceptions.ConnectionException;
-import utils.PasswordUtils;
+import model.ItemModel;
 
 public class ItemController {
 	
@@ -18,7 +19,7 @@ public class ItemController {
 			
 			try {
 				if (!this.itemDao.isNameAlreadyUsed(name)) {
-					this.itemDao.addItem(name, quantity, user_id);
+					this.itemDao.addItemDao(name, quantity, user_id);
 					return true;
 				}
 				
@@ -30,6 +31,20 @@ public class ItemController {
 		        System.out.println(e.getMessage());
 		    }
 			return false;
+		
+	}
+	
+	public ArrayList<ItemModel> listAllItemsOfUserController(Integer userId) {
+		
+		try {
+			return this.itemDao.listAllItemsOfUserDao(userId);
+		} catch (SQLException e) {
+			System.out.println("Erro ao executar o SQL: " + e.getMessage());
+		} catch (ConnectionException e) {
+			System.out.println("Erro ao conectar-se ao banco de dados: " + e.getMessage());
+		}
+		
+		return null;
 		
 	}
 	
