@@ -39,7 +39,7 @@ public class UserController {
 			} catch (IllegalArgumentException e) {
 		        System.out.println(e.getMessage());
 		    }
-			return "Algo de errado ocorreu no sistema, tente novamente!";
+			return "Erro com o banco de dados, tente novamente!";
 		
 	}
 	
