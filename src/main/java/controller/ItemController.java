@@ -4,6 +4,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import dao.ItemDao;
 import exceptions.ConnectionException;
+import exceptions.DuplicateItemNameException;
+import exceptions.ItemNotFoundException;
 import model.ItemModel;
 
 public class ItemController {
@@ -14,36 +16,35 @@ public class ItemController {
 		this.itemDao = new ItemDao();
 	}
 
-	public boolean addItemController(String name, Integer quantity, Integer user_id) {
+	public boolean addItemController(String name, Integer quantity, Integer userId) {
+	    try {
+	        if (this.itemDao.isNameItemAlreadyUsedDao(name, userId)) {
+	            throw new DuplicateItemNameException("Você já possui um item com o nome \"" + name + "\".");
+	        }
+	        return this.itemDao.addItemDao(name, quantity, userId);
 
-		try {
-			if (this.itemDao.isNameAlreadyUsed(name)) {
-				return false;
-			} else {
-				this.itemDao.addItemDao(name, quantity, user_id);
-				return true;
-			}
+	    } catch (DuplicateItemNameException e) {
+	        System.out.println("Erro de validação: " + e.getMessage());
+	    } catch (SQLException e) {
+	        System.out.println("Erro ao executar o SQL: " + e.getMessage());
+	    } catch (ConnectionException e) {
+	        System.out.println("Erro ao conectar-se ao banco de dados: " + e.getMessage());
+	    } catch (IllegalArgumentException e) {
+	        System.out.println("Erro de argumento inválido: " + e.getMessage());
+	    }
 
-		} catch (SQLException e) {
-			System.out.println("Erro ao executar o SQL: " + e.getMessage());
-		} catch (ConnectionException e) {
-			System.out.println("Erro ao conectar-se ao banco de dados: " + e.getMessage());
-		} catch (IllegalArgumentException e) {
-			System.out.println(e.getMessage());
-		}
-		return false;
-
+	    return false;
 	}
-
-	public boolean removeItemController(Integer item_id, Integer user_id) {
+	public boolean removeItemController(Integer itemId, Integer userId) {
 
 		try {
 
-			if (this.itemDao.isItemPresent(item_id)) {
-				this.itemDao.removeItemDao(item_id, user_id);
-				return true;
+			if (!this.itemDao.isItemPresentInUserDao(itemId, userId)) {
+				throw new ItemNotFoundException("Item com ID " + itemId + " não encontrado.");
 			}
-			return false;
+			
+			return this.itemDao.removeItemDao(itemId, userId);
+			
 		} catch (SQLException e) {
 			System.out.println("Erro ao executar o SQL: " + e.getMessage());
 		} catch (ConnectionException e) {
