@@ -30,3 +30,4 @@
 4. **Diagrama UML de Classe**
     
     A seguir está a estrutura do projeto representada pelas classes **UserModel** e **ItemModel**:
+   ![ShoppingList - Page 1](https://github.com/user-attachments/assets/bf82f173-163e-47e2-b5da-10fad7c8f583)
