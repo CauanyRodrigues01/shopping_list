@@ -67,5 +67,29 @@ public class ItemController {
 		return null;
 
 	}
+	
+	public ItemModel getItemByIdController(Integer itemId, Integer userId) {
+		try {
+			return this.itemDao.getItemByIdDao(itemId, userId);
+		} catch (SQLException e) {
+			System.out.println("Erro ao executar o SQL: " + e.getMessage());
+		} catch (ConnectionException e) {
+			System.out.println("Erro ao conectar-se ao banco de dados: " + e.getMessage());
+		}
+		return null;
+	}
+	
+	public boolean editItemController(ItemModel item) {
+		
+		try {
+			return this.itemDao.editItemDao(item);
+		} catch (SQLException e) {
+			System.out.println("Erro ao executar o SQL: " + e.getMessage());
+		} catch (ConnectionException e) {
+			System.out.println("Erro ao conectar-se ao banco de dados: " + e.getMessage());
+		}
+		return false;
+		
+	}
 
 }

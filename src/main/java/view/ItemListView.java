@@ -1,5 +1,6 @@
 package view;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -85,90 +86,135 @@ public class ItemListView extends JFrame {
 				tableModel.addRow(rowData);
 			}
 		}
+		
+		if (userItems == null || userItems.isEmpty()) {
+			ItemListView.this.setVisible(true);
+		    JOptionPane.showMessageDialog(this, "Nenhum item encontrado.");
+		}
 
-		JTable itemTable = new JTable(tableModel);
+		itemTable = new JTable(tableModel);
 		itemTable.setRowHeight(30);
 
-		itemTable.getColumn("Editar").setCellRenderer(new ButtonRenderer("Editar"));
+		itemTable.getColumnModel().getColumn(4).setCellRenderer(new ButtonRenderer("Editar"));
 		itemTable.getColumn("Editar").setCellEditor(new ButtonEditor(new JCheckBox(), "Editar", e -> {
 			int row = Integer.parseInt(e.getActionCommand());
 			int itemId = (int) itemTable.getValueAt(row, 0);
-			System.out.println("Editar item: " + itemId);
-			// Abrir view de edição
+			new EditItemView(userController, userId, itemId).setVisible(true);
+			ItemListView.this.dispose();
 		}));
-
-		itemTable.getColumn("Deletar").setCellRenderer(new ButtonRenderer("Deletar"));
+		
+		itemTable.getColumnModel().getColumn(5).setCellRenderer(new ButtonRenderer("Deletar"));
 		itemTable.getColumn("Deletar").setCellEditor(new ButtonEditor(new JCheckBox(), "Deletar", e -> {
 			int row = Integer.parseInt(e.getActionCommand());
-			int itemId = (int) itemTable.getValueAt(row, 0);
-			String itemNome = (String) itemTable.getValueAt(row, 1);
 
-			int confirm = JOptionPane.showConfirmDialog(null, "Deseja realmente remover o item \"" + itemNome + "\"?",
-					"Confirmação de Remoção", JOptionPane.YES_NO_OPTION);
-			if (confirm == JOptionPane.YES_OPTION) {
-				boolean removed = itemController.removeItemController(itemId, userId);
-				if (removed) {
-					JOptionPane.showMessageDialog(null, "Item \"" + itemNome + "\" removido com sucesso!");
-					updateTable(itemController, userId);
-				} else {
-					JOptionPane.showMessageDialog(null,
-							"Não foi possível remover o item. Verifique se ele ainda existe ou pertence a você.");
+			// Deferir ação para depois do stopCellEditing
+			javax.swing.SwingUtilities.invokeLater(() -> {
+				int itemId = (int) itemTable.getValueAt(row, 0);
+				String itemNome = (String) itemTable.getValueAt(row, 1);
+
+				int confirm = JOptionPane.showConfirmDialog(null, "Deseja realmente remover o item \"" + itemNome + "\"?",
+						"Confirmação de Remoção", JOptionPane.YES_NO_OPTION);
+				if (confirm == JOptionPane.YES_OPTION) {
+					boolean removed = itemController.removeItemController(itemId, userId);
+					if (removed) {
+						JOptionPane.showMessageDialog(null, "Item \"" + itemNome + "\" removido com sucesso!");
+						updateTable(itemController, userId);
+					} else {
+						JOptionPane.showMessageDialog(null,
+								"Não foi possível remover o item. Verifique se ele ainda existe ou pertence a você.");
+					}
 				}
-			}
-
+			});
 		}));
+
 
 		JScrollPane scrollPane = new JScrollPane(itemTable);
 		itemListView.add(scrollPane);
 	}
 
-	// Renderizador de botão para tabela
+	// Renderer de botão para exibição na tabela
 	class ButtonRenderer extends JButton implements TableCellRenderer {
+		private String label;
+
 		public ButtonRenderer(String label) {
+			this.label = label;
+			setOpaque(true);
 			setText(label);
+			setFont(new Font("Tahoma", Font.BOLD, 12));
+			setForeground(Color.WHITE);
+			setFocusPainted(false);
+			setBorderPainted(false);
+
+			if ("Deletar".equals(label)) {
+				setBackground(new Color(220, 53, 69)); // vermelho Bootstrap
+			} else if ("Editar".equals(label)) {
+				setBackground(new Color(0, 123, 255)); // azul Bootstrap
+			}
 		}
 
-		public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
-				int row, int column) {
+		@Override
+		public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
+			boolean hasFocus, int row, int column) {
 			return this;
 		}
 	}
 
+	// Editor de botão para ações em célula
 	// Editor de botão para ações em célula
 	class ButtonEditor extends DefaultCellEditor {
 		private JButton button;
 		private boolean clicked;
 		private JTable table;
 		private ActionListener action;
+		private String label;
 
 		public ButtonEditor(JCheckBox checkBox, String label, ActionListener action) {
 			super(checkBox);
 			this.action = action;
-			button = new JButton(label);
+			this.label = label;
+			this.button = new JButton(label);
 			button.addActionListener(e -> fireEditingStopped());
 		}
 
-		public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row,
-				int column) {
+		@Override
+		public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
 			this.table = table;
 			this.clicked = true;
+
+			// Reaplica o estilo sempre que a célula entra em edição
+			button.setText(label);
+			button.setFont(new Font("Tahoma", Font.BOLD, 12));
+			button.setForeground(Color.WHITE);
+
+			if ("Deletar".equals(label)) {
+				button.setBackground(new java.awt.Color(220, 53, 69)); // vermelho Bootstrap
+			} else if ("Editar".equals(label)) {
+				button.setBackground(new java.awt.Color(0, 123, 255)); // azul Bootstrap
+			}
+
+			button.setFocusPainted(false);
+			button.setBorderPainted(false);
+
 			return button;
 		}
 
+		@Override
 		public Object getCellEditorValue() {
 			if (clicked && action != null) {
 				int row = table.getSelectedRow();
 				action.actionPerformed(new ActionEvent(table, ActionEvent.ACTION_PERFORMED, String.valueOf(row)));
 			}
 			clicked = false;
-			return button.getText();
+			return label;
 		}
 
+		@Override
 		public boolean stopCellEditing() {
 			clicked = false;
 			return super.stopCellEditing();
 		}
 	}
+
 
 	public void updateTable(ItemController itemController, Integer userId) {
 		tableModel.setRowCount(0); // limpa tudo
@@ -182,5 +228,4 @@ public class ItemListView extends JFrame {
 			}
 		}
 	}
-
 }
