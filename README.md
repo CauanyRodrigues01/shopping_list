@@ -77,6 +77,13 @@ A seguir está a estrutura do projeto representada pelas classes **UserModel** e
 
 ![ShoppingList - Page 1](https://github.com/user-attachments/assets/bf82f173-163e-47e2-b5da-10fad7c8f583)
 
+## 🚧 Próximos Passos
+
+- [ ] Implementar DTOs (Data Transfer Objects) para desacoplar a lógica entre camadas  
+- [ ] Adicionar logs com biblioteca como `java.util.logging` ou `log4j`  
+- [ ] Criar testes automatizados (JUnit) para controllers, DAOs e validações  
+
+
 ## 🔗 Como executar o projeto
 
 1. Clone o repositório:
