@@ -46,22 +46,4 @@ public class UserModel {
 		this.itemList = new ArrayList<>();
 	}
 
-	public void addItem(ItemModel item) {
-		this.itemList.add(item);
-	}
-	
-	public void removeItem(ItemModel item) {
-		this.itemList.remove(item);
-	}
-	
-
-	public void clearUserItemList() {
-		this.itemList.clear();
-	}
-	
-	// Retorna para visualização a lista de compra não modificável
-	public List<ItemModel> getUserItemListView() {
-	    return Collections.unmodifiableList(itemList);
-	}
-
 }
