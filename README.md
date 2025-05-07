@@ -25,7 +25,7 @@ As senhas dos usuários são protegidas com **hash Argon2**, um dos algoritmos m
   - `Controller`: gerencia a lógica entre os dados e a interface
   - `DAO (Data Access Object)`: responsável por persistir manipular o Banco de Dados 
 - **Argon2** para hash de senhas
-- 
+  
 ## 💡 Motivação
 
 O principal objetivo desse projeto foi aprender e aplicar o padrão **MVC + DAO** com Java e Swing. Entender essa arquitetura foi uma das minhas maiores motivações, pois ela é amplamente usada em projetos reais e ajuda a manter o código organizado, reutilizável e escalável.
