@@ -24,10 +24,8 @@ As senhas dos usuários são protegidas com **hash Argon2**, um dos algoritmos m
   - `View`: interface com o usuário (formulários e tabelas)
   - `Controller`: gerencia a lógica entre os dados e a interface
   - `DAO (Data Access Object)`: responsável por persistir manipular o Banco de Dados 
-- **Argon2** para hash de senhas  
-- `ArrayList` para armazenamento temporário  
-- Boas práticas de organização com pacotes separados (`controller`, `model`, `view`, `dao`)
-
+- **Argon2** para hash de senhas
+- 
 ## 💡 Motivação
 
 O principal objetivo desse projeto foi aprender e aplicar o padrão **MVC + DAO** com Java e Swing. Entender essa arquitetura foi uma das minhas maiores motivações, pois ela é amplamente usada em projetos reais e ajuda a manter o código organizado, reutilizável e escalável.
@@ -87,7 +85,7 @@ A seguir está a estrutura do projeto representada pelas classes **UserModel** e
    ```
 2. Abra o projeto no Eclipse, IntelliJ ou outro IDE Java
 
-3. Execute a classe principal em app/Main.java
+3. Execute a classe principal em `app/Main.java`
 
 > Requisitos: JDK 17 ou superior
 
